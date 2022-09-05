@@ -10,8 +10,8 @@ namespace TrainigProject
             int dist;
             dist = Convert.ToInt32(Console.ReadLine());
             int ans;
-            ans = dist / 1000;
-            Console.WriteLine($"{ans}");
+            ans = 1000 - (dist - (dist / 1000 * 1000));
+            Console.WriteLine(ans);
         }
     }
 }
