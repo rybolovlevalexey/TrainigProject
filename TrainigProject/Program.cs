@@ -6,13 +6,12 @@ namespace TrainigProject
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Введите два целых числа через пробел");
-            string[] st = Console.ReadLine().Split(' ');
-            int a = int.Parse(st[0]), b = int.Parse(st[1]);
-            int res1 = a + b;
-            int res2 = a - b;
-            int res3 = a * b;
-            Console.WriteLine($"{res1} {res2} {res3}");
+            Console.WriteLine("Введите пройденное расстояние в метрах");
+            int dist;
+            dist = Convert.ToInt32(Console.ReadLine());
+            int ans;
+            ans = dist / 1000;
+            Console.WriteLine($"{ans}");
         }
     }
 }
