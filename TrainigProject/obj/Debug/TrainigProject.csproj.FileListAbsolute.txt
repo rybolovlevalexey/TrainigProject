@@ -1,0 +1,6 @@
+C:\RiderProjects\TrainigProject\TrainigProject\bin\Debug\TrainigProject.exe
+C:\RiderProjects\TrainigProject\TrainigProject\bin\Debug\TrainigProject.pdb
+C:\RiderProjects\TrainigProject\TrainigProject\obj\Debug\TrainigProject.csprojAssemblyReference.cache
+C:\RiderProjects\TrainigProject\TrainigProject\obj\Debug\TrainigProject.csproj.CoreCompileInputs.cache
+C:\RiderProjects\TrainigProject\TrainigProject\obj\Debug\TrainigProject.exe
+C:\RiderProjects\TrainigProject\TrainigProject\obj\Debug\TrainigProject.pdb
