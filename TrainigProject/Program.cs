@@ -6,7 +6,10 @@ namespace TrainigProject
     {
         public static void Main(string[] args)
         {
-            Console.Write("Hello");
+            string name, ans;
+            name = Console.ReadLine();
+            ans = "Привет, " + name;
+            Console.WriteLine(ans);
         }
     }
 }
