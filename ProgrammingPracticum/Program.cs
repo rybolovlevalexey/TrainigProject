@@ -4,13 +4,13 @@ class Program
 {
 	public static void Main(string[] args)
 	{
-		int ans1, ans2;
-		ans1 = Convert.ToInt32(Console.ReadLine());
-		ans2 = Convert.ToInt32(Console.ReadLine());
-		if ((ans1 == ans2 && ans1 == 1) || (ans1 != 1 && ans2 != 1)){
-			Console.WriteLine("YES");
+		int num = Convert.ToInt32(Console.ReadLine());
+		if (num > 0){
+			Console.WriteLine(1);
+		} else if (num == 0){
+			Console. WriteLine(0);
 		} else {
-			Console.WriteLine("NO");
+			Console.WriteLine(-1);
 		}
 	}
 }
