@@ -5,16 +5,19 @@ class Program
     public static void Main(string[] args)
     {
         Console.WriteLine("Введите номер операции: 1.Сложение 2.Вычитание 3.Умножение");
-		int n = Convert.ToInt32(Console.ReadLine());
-		switch(n){
+		string[] st = Console.ReadLine().Split();
+		int oper = Convert.ToInt32(st[0]);
+		double first = Convert.ToDouble(st[1]);
+		double second = Convert.ToDouble(st[2]);
+		switch(oper){
 			case 1:
-				Console.WriteLine("Сложение");
+				Console.WriteLine($"Результат операции {first + second}");
 				break;
 			case 2:
-				Console.WriteLine("Вычитание");
+				Console.WriteLine($"Результат операции {first - second}");
 				break;
 			case 3:
-				Console.WriteLine("Умножение");
+				Console.WriteLine($"Результат операции {first * second}");
 				break;
 			default:
 				Console.WriteLine("Неизвестная операция!");
