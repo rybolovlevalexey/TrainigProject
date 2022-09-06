@@ -4,11 +4,16 @@ class Program
 {
     public static void Main(string[] args)
     {
-        int num = Convert.ToInt32(Console.ReadLine());
-		if (num % 2 == 0){
-			Console.WriteLine("EVEN");
+        int a, b;
+		string[] st = Console.ReadLine().Split();
+		a = Convert.ToInt32(st[0]);
+		b = Convert.ToInt32(st[1]);
+		if (a == b){
+			Console.WriteLine("a = b");
+		} else if (a < b){
+			Console.WriteLine("a < b");
 		} else {
-			Console.WriteLine("ODD");
+			Console.WriteLine("a > b");
 		}
 	}
 }
