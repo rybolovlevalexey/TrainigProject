@@ -16,6 +16,9 @@ class Program
 			case 3:
 				Console.WriteLine("Умножение");
 				break;
+			default:
+				Console.WriteLine("Неизвестная операция!");
+				break;
 		}
 	}
 }
