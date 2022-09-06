@@ -1,15 +1,10 @@
-﻿using System;
+using System;
 
-namespace ProgrammingPracticum
+class Program
 {
-    internal class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            int n, k;
-            n = Convert.ToInt32(Console.ReadLine());
-            k = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine((n - k % n) % n);
-        }
-    }
+        int num = Convert.ToInt32(Console.ReadLine());
+		Console.WriteLine(Convert.ToInt32(num % 10 == num / 1000 && num / 10 % 10 == num / 100 % 10));
+	}
 }
