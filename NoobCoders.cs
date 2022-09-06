@@ -4,29 +4,15 @@ class Program
 {
     public static void Main(string[] args)
     {
-        int n = Convert.ToInt32(Console.ReadLine());
-		switch(n % 7){
+        Console.WriteLine("Введите номер операции: 1.Сложение 2.Вычитание 3.Умножение");
+		int n = Convert.ToInt32(Console.ReadLine());
+		switch(n){
 			case 1:
-				Console.WriteLine("Понедельник");
-				break;
+				Console.WriteLine("Сложение");
 			case 2:
-				Console.WriteLine("Вторник");
-				break;
+				Console.WriteLine("Вычитание");
 			case 3:
-				Console.WriteLine("Среда");
-				break;
-			case 4:
-				Console.WriteLine("Четверг");
-				break;
-			case 5:
-				Console.WriteLine("Пятница");
-				break;
-			case 6:
-				Console.WriteLine("Суббота");
-				break;
-			case 0:
-				Console.WriteLine("Воскресенье");
-				break;
+				Console.WriteLine("Умножение");
 		}
 	}
 }
