@@ -4,16 +4,17 @@ class Program
 {
     public static void Main(string[] args)
     {
-        int a, b;
-		string[] st = Console.ReadLine().Split();
-		a = Convert.ToInt32(st[0]);
-		b = Convert.ToInt32(st[1]);
-		if (a == b){
-			Console.WriteLine("a = b");
-		} else if (a < b){
-			Console.WriteLine("a < b");
+        string[] st = Console.ReadLine().Split();
+		int a = Convert.ToInt32(st[0]);
+		int b = Convert.ToInt32(st[1]);
+		int c = Convert.ToInt32(st[2]);
+
+		if (a <= b && a <= c){
+			Console.WriteLine(a);
+		} else if (b <= a && b <= c){
+			Console.WriteLine(b);
 		} else {
-			Console.WriteLine("a > b");
+			Console.WriteLine(c);
 		}
 	}
 }
