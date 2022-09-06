@@ -9,10 +9,13 @@ class Program
 		switch(n){
 			case 1:
 				Console.WriteLine("Сложение");
+				break;
 			case 2:
 				Console.WriteLine("Вычитание");
+				break;
 			case 3:
 				Console.WriteLine("Умножение");
+				break;
 		}
 	}
 }
