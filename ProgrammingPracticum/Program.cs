@@ -4,25 +4,29 @@ class Program
 {
 	public static void Main(string[] args)
 	{
-		int n = Convert.ToInt32(Console.ReadLine());
-		int m = Convert.ToInt32(Console.ReadLine());
-		int summa = 0;
-		for(int i = n; i <= m; i++){
-			bool flag = true;
-			if (i == 1){
-				flag = false;
-			} else {
-				for (int d = 2; d < i/2+1; d++){
-					if (i % d == 0 && i != d){
-						flag = false;
-						break;
-					}
+		int first = Convert.ToInt32(Console.ReadLine());
+		int second = Convert.ToInt32(Console.ReadLine());
+		int n = first, m = second;
+		int ans = -1;
+		while (n > 0){
+			m = second;
+			while (m > 0){
+				if (m % 10 == n % 10){
+					ans = m % 10;
+					break;
 				}
+				m = m / 10;
 			}
-			if (flag && i > 0){
-				summa += i;
+			n = n / 10;
+			if (ans != - 1){
+				break;
 			}
 		}
-		Console.WriteLine($"Сумма простых чисел = {summa}");
+		while (first > 0){
+			if (first % 10 == ans){
+				Console.Write($"{ans} ");
+			}
+			first = first / 10;
+		}
 	}
 }
