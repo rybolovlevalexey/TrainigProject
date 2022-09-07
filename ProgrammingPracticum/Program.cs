@@ -4,32 +4,28 @@ class Program
 {
 	public static void Main(string[] args)
 	{
-		string[] st = Console.ReadLine().Split(", ");
+		string st = Console.ReadLine();
 		int[] numbers = new int[st.Length];
-		int summa = 0;
+		int mn = 0, mx = 0;
 		for (int i = 0; i < st.Length; i++){
-			numbers[i] = Convert.ToInt32(st[i]);
-			summa += Convert.ToInt32(st[i]);
-		}
-		if (summa == 20){
-			Console.WriteLine("О, отличник появился! На олимпиаду пойдешь");
-		} else {
-			bool flag2 = false, flag3 = false;
-			foreach (var num in numbers){
-				if (num == 2){
-					flag2 = true;
-				}
-				if (num == 3){
-					flag3 = true;
-				}
-			}
-			if (flag2){
-				Console.WriteLine("Ну что, студент, пора долг Родине отдать");
-			} else if (flag3){
-				Console.WriteLine("Прощай стипендия!");
+			int elem = Convert.ToInt32(Convert.ToString(st[i]));
+			numbers[i] = elem;
+			if (i == 0){
+				mx = elem;
+				mn = elem;
 			} else {
-				Console.WriteLine("Живи пока, через полгода увидимся");
+				if (mx < elem){
+					mx = elem;
+				}
+				if (mn > elem){
+					mn = elem;
+				}
 			}
 		}
+		for (int i = numbers.Length - 1; i > -1; i--){
+			Console.Write(numbers[i]);
+		}
+		Console.Write(mx);
+		Console.Write(mn);
 	}
 }
