@@ -26,7 +26,12 @@ class Program
 		if (flag){
 			Console.WriteLine("YES");
 		} else {
-			Console.WriteLine("NO");
+			if (x1 == x2 || y1 == y2){
+				Console.WriteLine("YES");
+			} else {
+				Console.WriteLine("NO");
+			}
+			
 		}
 	}
 }
