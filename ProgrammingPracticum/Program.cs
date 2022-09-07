@@ -1,31 +1,32 @@
 using System;
-	
+
 class Program
 {
 	public static void Main(string[] args)
 	{
-		string st = Console.ReadLine();
-		int[] numbers = new int[st.Length];
-		int mn = 0, mx = 0;
-		for (int i = 0; i < st.Length; i++){
-			int elem = Convert.ToInt32(Convert.ToString(st[i]));
-			numbers[i] = elem;
-			if (i == 0){
-				mx = elem;
-				mn = elem;
-			} else {
-				if (mx < elem){
-					mx = elem;
-				}
-				if (mn > elem){
-					mn = elem;
-				}
+		double x1 = Convert.ToDouble(Console.ReadLine());
+		double y1 = Convert.ToDouble(Console.ReadLine());
+		double x2 = Convert.ToDouble(Console.ReadLine());
+		double y2 = Convert.ToDouble(Console.ReadLine());
+		bool flag = false;
+		for (int i = 1; i < 8; i++){
+			if (x1 + i == x2 && y1 + i == y2){
+				flag = true;
+			}
+			if (x1 - i == x2 && y1 - i == y2){
+				flag = true;
+			}
+			if (x1 + i == x2 && y1 - i == y2){
+				flag = true;
+			}
+			if (x1 - i == x2 && y1 + i == y2){
+				flag = true;
 			}
 		}
-		for (int i = numbers.Length - 1; i > -1; i--){
-			Console.Write(numbers[i]);
+		if (flag){
+			Console.WriteLine("YES");
+		} else {
+			Console.WriteLine("NO");
 		}
-		Console.Write(mx);
-		Console.Write(mn);
 	}
 }
