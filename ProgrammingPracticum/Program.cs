@@ -4,20 +4,14 @@ class Program
 {
 	public static void Main(string[] args)
 	{
-		int num = Convert.ToInt32(Console.ReadLine());
-		int mxcnt = num * 2 - 1;
-		string st = "";
-		int i = 1;
-		while (i <= num){
-			st = "";
-			for (int j = 0; j < num - i; j++){
-				st = st + " ";
+		string st1 = Console.ReadLine();
+		string st2 = Console.ReadLine();
+		int n = 0;
+		for (int i = 0; i < st1.Length; i++){
+			if (Convert.ToInt32(st1[i]) == Convert.ToInt32(st2[i])){
+				n++;
 			}
-			for (int j = 0; j < i * 2 - 1; j++){
-				st = st + "*";
-			}
-			Console.WriteLine(st);
-			i++;
 		}
+		Console.WriteLine($"Совпадение {n} элементов");
 	}
 }
