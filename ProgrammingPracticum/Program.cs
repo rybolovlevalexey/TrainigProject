@@ -9,29 +9,18 @@ class Program
 		double x2 = Convert.ToDouble(Console.ReadLine());
 		double y2 = Convert.ToDouble(Console.ReadLine());
 		bool flag = false;
-		for (int i = 1; i < 8; i++){
-			if (x1 + i == x2 && y1 + i == y2){
-				flag = true;
-			}
-			if (x1 - i == x2 && y1 - i == y2){
-				flag = true;
-			}
-			if (x1 + i == x2 && y1 - i == y2){
-				flag = true;
-			}
-			if (x1 - i == x2 && y1 + i == y2){
-				flag = true;
+		int[] numbers = {-1, 0, 1};
+		foreach (var i in numbers){
+			foreach (var j in numbers){
+				if (x1 + i == x2 && y1 + j == y2){
+					flag = true;
+				}
 			}
 		}
 		if (flag){
 			Console.WriteLine("YES");
 		} else {
-			if (x1 == x2 || y1 == y2){
-				Console.WriteLine("YES");
-			} else {
-				Console.WriteLine("NO");
-			}
-			
+			Console.WriteLine("NO");
 		}
 	}
 }
