@@ -5,22 +5,19 @@ class Program
 	public static void Main(string[] args)
 	{
 		int n = Convert.ToInt32(Console.ReadLine());
-		int summa = 0;
-		int mx = -1, mn = -1;
-		while (n > 0){
-			if (mx == -1){
-				mx = n % 10;
-				mn = n % 10;
-			} else {
-				if (mx < n % 10){
-					mx = n % 10;
-				}
-				if (mn > n % 10){
-					mn = n % 10;
-				}
+		int cnt = 0, num = 1;
+		while (num <= n){
+			string st1 = Convert.ToString(num), st2 = "";
+			int rnum = num;
+			while (rnum > 0){
+				st2 = st2 + Convert.ToString(rnum % 10);
+				rnum /= 10;
 			}
-			n /= 10;
+			num += 1;
+			if (st1 == st2){
+				cnt += 1;
+			}
 		}
-		Console.WriteLine($"{mn} {mx}");
+		Console.WriteLine(cnt);
 	}
 }
