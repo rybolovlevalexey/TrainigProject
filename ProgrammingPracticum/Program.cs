@@ -4,14 +4,17 @@ class Program
 {
 	public static void Main(string[] args)
 	{
-		int n, m;
 		string[] st = Console.ReadLine().Split();
-		n = Convert.ToInt32(st[0]);
-		m = Convert.ToInt32(st[1]);
-		if (m % n == 0){
-			Console.WriteLine(m / n);
-		} else {
-			Console.WriteLine(m / n + 1);
+		double x = Convert.ToDouble(st[0]);
+		double y = Convert.ToDouble(st[1]);
+		int n = 1;
+		double summa = 0;
+		summa += x;
+		while (summa <= y){
+			x = x * 1.7;
+			summa += x;
+			n++;
 		}
+		Console.WriteLine(n);
 	}
 }
