@@ -7,14 +7,20 @@ class Program
 		int n = Convert.ToInt32(Console.ReadLine());
 		string[] spisok = Console.ReadLine().Split();
 		string[] ans = new string[n];
-		int cnt = 0;
+		int cnt = 0, mx = 0;
 		bool flag = false;
-		ans[0] = spisok[n - 1];
-		for (int i = 0; i + 1 < n; i++){
-			ans[i + 1] = spisok[i];
+		for (int i = 0; i < n; i++){
+			if (i == 0){
+				mx = Convert.ToInt32(spisok[i]);
+			} else {
+				if (mx < Convert.ToInt32(spisok[i])){
+					mx = Convert.ToInt32(spisok[i]);
+				}
+			}
 		}
-		foreach (var el in ans){
-			Console.Write($"{el} ");
-		}
+		Console.WriteLine(mx);
+		//foreach (var el in ans){
+		//	Console.Write($"{el} ");
+		//}
 	}
 }
