@@ -6,8 +6,11 @@ class Program
 	{
 		int n = Convert.ToInt32(Console.ReadLine());
 		string[] spisok = Console.ReadLine().Split();
-		for (int i = 0; i < n; i += 2){
-			Console.Write($"{spisok[i]}");
+		for (int i = 0; i < n; i++){
+			if (Convert.ToInt32(spisok[i]) % 2 == 0){
+				Console.Write($"{spisok[i]} ");	
+			} 
+			
 		}
 	}
 }
