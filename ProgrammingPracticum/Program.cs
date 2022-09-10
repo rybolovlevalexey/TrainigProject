@@ -8,11 +8,11 @@ class Program
 		string[] spisok = Console.ReadLine().Split();
 		int cnt = 0;
 		bool flag = false;
-		for (int i = 1; i * 2 < n; i++){
+		for (int i = 0; i + 1 < n; i += 2){
 			string a = spisok[i];
-			string b = spisok[n - i - 1];
+			string b = spisok[i + 1];
 			spisok[i] = b;
-			spisok[n - i - 1] = a;
+			spisok[i + 1] = a;
 		}
 		foreach (var el in spisok){
 			Console.Write($"{el} ");
