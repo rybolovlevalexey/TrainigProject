@@ -5,22 +5,20 @@ class Program
 	public static void Main(string[] args)
 	{
 		int n = Convert.ToInt32(Console.ReadLine());
-		string[] spisok = Console.ReadLine().Split();
-		string[] ans = new string[n];
-		int cnt = 0, mx = 0;
-		bool flag = false;
+		string[] sp = Console.ReadLine().Split();
+		int lst = 0;
+		int ans = 0;
 		for (int i = 0; i < n; i++){
 			if (i == 0){
-				mx = Convert.ToInt32(spisok[i]);
+				ans += 1;
+				lst = Convert.ToInt32(sp[i]);
 			} else {
-				if (mx < Convert.ToInt32(spisok[i])){
-					mx = Convert.ToInt32(spisok[i]);
+				if (lst != Convert.ToInt32(sp[i])){
+					ans += 1;
+					lst = Convert.ToInt32(sp[i]);
 				}
 			}
 		}
-		Console.WriteLine(mx);
-		//foreach (var el in ans){
-		//	Console.Write($"{el} ");
-		//}
+		Console.WriteLine(ans);
 	}
 }
