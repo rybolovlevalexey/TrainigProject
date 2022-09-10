@@ -6,13 +6,12 @@ class Program
 	{
 		int n = Convert.ToInt32(Console.ReadLine());
 		string[] spisok = Console.ReadLine().Split();
+		string[] ans = new string[n];
 		int cnt = 0;
 		bool flag = false;
-		for (int i = 0; i + 1 < n; i += 2){
-			string a = spisok[i];
-			string b = spisok[i + 1];
-			spisok[i] = b;
-			spisok[i + 1] = a;
+		ans[0] = spisok[n - 1];
+		for (int i = 1; i + 1 < n; i++){
+			ans[i + 1] = spisok[i];
 		}
 		foreach (var el in spisok){
 			Console.Write($"{el} ");
