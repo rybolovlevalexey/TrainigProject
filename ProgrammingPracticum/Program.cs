@@ -8,18 +8,14 @@ class Program
 		string[] spisok = Console.ReadLine().Split();
 		int cnt = 0;
 		bool flag = false;
-		for (int i = 0; i + 1 < n; i++){
-			char a = spisok[i][0];
-			char b = spisok[i + 1][0];
-			if (a == b && b == '-'){
-				flag = true;
+		for (int i = 1; i + 1 < n; i++){
+			int a = Convert.ToInt32(spisok[i - 1]);
+			int b = Convert.ToInt32(spisok[i]);
+			int c = Convert.ToInt32(spisok[i + 1]);
+			if (b > a && b > c){
+				cnt++;
 			}
 		}
-		if (flag){
-			Console.WriteLine("YES");
-		} else {
-			Console.WriteLine("NO");
-
-		}
+		Console.WriteLine(cnt);
 	}
 }
