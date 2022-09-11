@@ -5,43 +5,36 @@ class Program
 {
 	public static void Main(string[] args)
 	{
-		int n = Convert.ToInt32(Console.ReadLine());
-		List<int> spisok = new List<int>();
-		int dlina = 0;
-		for (int k = 0; k < n; k++){
-			string[] st = Console.ReadLine().Split();
-			if (st[0] == "ADD"){
-				int num = Convert.ToInt32(st[1]);
-				bool flag = true;
-				foreach (var elem in spisok){
-					if (elem == num){
-						flag = false;
-					}
+		//int n = Convert.ToInt32(Console.ReadLine());
+		string[] st1 = Console.ReadLine().Split();
+		string[] st2 = Console.ReadLine().Split();
+		int[] sp1 = new int[st1.Length];
+		int[] sp2 = new int[st2.Length];
+		List<int> sp = new List<int>();
+		for (int i = 0; i < st1.Length; i++){
+			sp1[i] = Convert.ToInt32(st1[i]);
+		}
+		for (int i = 0; i < st2.Length; i++){
+			sp2[i] = Convert.ToInt32(st2[i]);
+		}
+		int ans = 0;
+		foreach (var el1 in sp1){
+			bool flag1 = false, flag2 = true;
+			foreach (var el2 in sp2){
+				if (el1 == el2){
+					flag1 = true;
+					break;
 				}
-				if (flag){
-					spisok.Add(num);
-					dlina += 1;
-				}	
 			}
-			
-			if (st[0] == "COUNT"){
-				Console.WriteLine(dlina);
+			foreach (var a in sp){
+				if (a == el1){
+					flag2 = false;
+				}
 			}
-
-			if (st[0] == "PRESENT"){
-				int num = Convert.ToInt32(st[1]);
-				bool flag = false;
-				foreach (var elem in spisok){
-					if (num == elem){
-						flag = true;
-					}
-				}
-				if (flag){
-					Console.WriteLine("YES");
-				} else {
-					Console.WriteLine("NO");
-				}
+			if (flag1 && flag2){
+				ans += 1;
 			}
 		}
+		Console.WriteLine(ans);
 	}
 }
