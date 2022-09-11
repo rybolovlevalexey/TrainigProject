@@ -12,18 +12,10 @@ class Program
 			sp[i] = Convert.ToInt32(st[i]);
 		}
 		int x = Convert.ToInt32(Console.ReadLine());
-		int ans = 0, delta = 0;
 		for (int i = 0; i < n; i++){
-			if (i == 0){
-				ans = sp[i];
-				delta = Math.Abs(sp[i] - x);
-			} else {
-				if (delta > Math.Abs(sp[i] - x)){
-					ans = sp[i];
-					delta = Math.Abs(sp[i] - x);
-				}
+			if (sp[i] == x){
+				Console.Write($"{i + 1} ");
 			}
 		}
-		Console.WriteLine(ans);
 	}
 }
