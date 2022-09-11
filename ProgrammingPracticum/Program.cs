@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 class Program
 {
@@ -6,25 +7,23 @@ class Program
 	{
 		int n = Convert.ToInt32(Console.ReadLine());
 		string[] st = Console.ReadLine().Split();
-		int[] sp = new int[n];
+		List<int> sp = new List<int>();
 		for (int i = 0; i < n; i++){
-			sp[i] = Convert.ToInt32(st[i]);
+			sp.Add(Convert.ToInt32(st[i]));
 		}
-		int rost = Convert.ToInt32(Console.ReadLine());
-		int j = 0;
-		while (j + 1 < n){
-			if (rost > sp[0]){
-				Console.WriteLine(1);
-				break;
+		sp.Sort();
+		int ans = 0, lst = -1;
+		for (int i = 0; i < n; i++){
+			if (i == 0){
+				ans += 1;
+				lst = sp[i];
+			} else {
+				if (sp[i] != lst){
+					lst = sp[i];
+					ans += 1;
+				}
 			}
-			if (rost <= sp[j] && rost > sp[j + 1]){
-				Console.WriteLine(j + 2);
-				break;
-			}
-			if (rost < sp[j] && rost < sp[j + 1] && j + 2 == n){
-				Console.WriteLine(n + 1);
-			}
-			j += 1;
 		}
+		Console.WriteLine(ans);
 	}
 }
