@@ -11,12 +11,13 @@ class Program
 		for (int i = 0; i < n; i++){
 			sp[i] = Convert.ToInt32(st[i]);
 		}
-		int x = 0;
+		int x = 0, ind = 0;
 		for (int i = 0; i < n; i++){
 			if (i == 0 || x < sp[i]){
 				x = sp[i];
+				ind = i + 1;
 			}
 		}
-		Console.WriteLine(x);
+		Console.WriteLine(ind);
 	}
 }
