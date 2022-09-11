@@ -13,11 +13,17 @@ class Program
 		}
 		int x = 0, ind = 0;
 		for (int i = 0; i < n; i++){
-			if (i == 0 || x < sp[i]){
+			if (i == 0 || x > sp[i]){
 				x = sp[i];
-				ind = i + 1;
+				ind = i;
 			}
 		}
-		Console.WriteLine(ind);
+		Console.Write($"{x} ");
+		for (int i = 0; i < n; i++){
+			if ((i == 0 || x > sp[i]) && ind != i){
+				x = sp[i];
+			}
+		}
+		Console.Write(x);
 	}
 }
