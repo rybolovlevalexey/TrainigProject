@@ -6,24 +6,25 @@ class Program
 	public static void Main(string[] args)
 	{
 		int n = Convert.ToInt32(Console.ReadLine());
-		string[] st = Console.ReadLine().Split();
-		int[] sp = new int[n];
-		for (int i = 0; i < n; i++){
-			sp[i] = Convert.ToInt32(st[i]);
-		}
-		int x = 0, ind = 0;
-		for (int i = 0; i < n; i++){
-			if (i == 0 || x > sp[i]){
-				x = sp[i];
-				ind = i;
+		int[] ans = new int[2];
+		double ans_dl = 0;
+		for (int k = 0; k < n; k++){
+			string[] st = Console.ReadLine().Split();
+			int x = Convert.ToInt32(st[0]);
+			int y = Convert.ToInt32(st[1]);
+			double s = Math.Pow(x*x + y*y, 0.5);
+			if (k == 0){
+				ans_dl = s;
+				ans[0] = x;
+				ans[1] = y;
+			} else {
+				if (s > ans_dl){
+					ans_dl = s;
+					ans[0] = x;
+					ans[1] = y;
+				}
 			}
 		}
-		Console.Write($"{x} ");
-		for (int i = 0; i < n; i++){
-			if ((i == 0 || x > sp[i]) && ind != i){
-				x = sp[i];
-			}
-		}
-		Console.Write(x);
+		Console.Write($"{ans[0]} {ans[1]}");
 	}
 }
