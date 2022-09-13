@@ -5,26 +5,20 @@ class Program
 {
 	public static void Main(string[] args)
 	{
-		int n = Convert.ToInt32(Console.ReadLine());
-		int[] ans = new int[2];
-		double ans_dl = 0;
-		for (int k = 0; k < n; k++){
-			string[] st = Console.ReadLine().Split();
-			int x = Convert.ToInt32(st[0]);
-			int y = Convert.ToInt32(st[1]);
-			double s = Math.Pow(x*x + y*y, 0.5);
-			if (k == 0){
-				ans_dl = s;
-				ans[0] = x;
-				ans[1] = y;
-			} else {
-				if (s > ans_dl){
-					ans_dl = s;
-					ans[0] = x;
-					ans[1] = y;
+		int num = 0, last = 999, ans = 0;
+		while (num <= last){
+			string st = Convert.ToString(num);
+			int cnt = 0;
+			foreach (var elem in st){
+				if (elem == '7'){
+					cnt += 1;
 				}
 			}
+			if (cnt == 1){
+				ans += 1;
+			}
+			num += 1;
 		}
-		Console.Write($"{ans[0]} {ans[1]}");
+		Console.WriteLine(ans);
 	}
 }
