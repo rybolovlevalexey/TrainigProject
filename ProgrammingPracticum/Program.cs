@@ -8,34 +8,45 @@ namespace Консольное_приложение
         static void Main(string[] args)
         {
             string st = Console.ReadLine();
-            Dictionary<string, int> letters = new Dictionary<string, int>();
+            Dictionary<char, List<int>> letters = new Dictionary<char, List<int>>();
+            int ind = 0;
             foreach (var elem in st)
             {
-                bool flag = false;
+                bool flag = true;
                 foreach (var key in letters.Keys)
                 {
-                    if (Convert.ToString(elem) == Convert.ToString(key))
+                    if (key == elem)
                     {
-                        flag = true;
+                        flag = false;
                     }
                 }
                 if (flag)
                 {
-                    letters[Convert.ToString(elem)] = letters[Convert.ToString(elem)] + 1;
+                    List<int> sp = new List<int>();
+                    sp.Add(ind);
+                    letters[elem] = sp;
                 } else
                 {
-                    letters[Convert.ToString(elem)] = 1;
+                    List<int> sp = new List<int>();
+                    sp = letters[elem];
+                    sp.Add(ind);
+                    letters[elem] = sp;
                 }
+                ind += 1;
             }
-            List<string> keys = new List<string>();
-            foreach (var key in letters.Keys)
+            List<char> keys = new List<char>();
+            foreach (var el in letters.Keys)
             {
-                keys.Add(key);
+                keys.Add(el);
             }
             keys.Sort();
             foreach (var key in keys)
             {
-                Console.Write($"{key} {letters[key]} ");
+                Console.Write($"{key} ");
+                foreach (var index in letters[key])
+                {
+                    Console.Write($"{index} ");
+                }
             }
         }
     }
