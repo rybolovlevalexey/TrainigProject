@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Консольное_приложение
 {
@@ -6,58 +7,29 @@ namespace Консольное_приложение
     {
         static void Main(string[] args)
         {
-            string st = Console.ReadLine();
-            string ans_st = "";
-            if (st.Length <= 1)
-            {
-                ans_st = st;
-            }
-            if (st.Length < 4 && st.Length > 1)
-            {
-                string first = "", last = "";
-                int i = 0;
-                foreach (var elem in st)
+            List<int> sp = new List<int>();
+            int num = Convert.ToInt32(Console.ReadLine());
+            for (int i = 1; i <= num / 2 + 1; i += 1) {
+                bool flag = true;
+                if (num % i == 0)
                 {
-                   if (i == 0)
+                    int d = num / i;
+                    foreach (var elem in sp)
                     {
-                        first = Convert.ToString(elem);
+                        if (elem == i || elem == d)
+                        {
+                            flag = false;
+                            break;
+                        }
                     }
-                   if (i == st.Length - 1)
+                    if (flag)
                     {
-                        last = Convert.ToString(elem);
+                        Console.WriteLine($"{num} = {i} * {d}");
+                        sp.Add(i);
+                        sp.Add(d);
                     }
-                   if (i != st.Length - 1 && i != 0)
-                    {
-                        ans_st = ans_st + Convert.ToString(elem);
-                    }
-                    i += 1;
                 }
-                ans_st = last + ans_st + first;
             }
-            if (st.Length >= 4)
-            {
-                string first = "", fourth = "";
-                int i = 0;
-                foreach (var elem in st)
-                {
-                    if (i == 0)
-                    {
-                        first = Convert.ToString(elem);
-                    }
-                    if (i == 3)
-                    {
-                        fourth = Convert.ToString(elem);
-                        ans_st += first;
-                    }
-                    if (i != 0 && i != 3)
-                    {
-                        ans_st += Convert.ToString(elem);
-                    }
-                    i += 1;
-                }
-                ans_st = fourth + ans_st;
-            }
-            Console.WriteLine(ans_st);
         }
     }
 }
