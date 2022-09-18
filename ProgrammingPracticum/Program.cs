@@ -9,19 +9,26 @@ namespace Консольное_приложение
         {
             int num = Convert.ToInt32(Console.ReadLine());
             List<int> res = new List<int>();
-            res = GetList(num);
+            res = GetSyracusaSequence(num);
             foreach(var el in res)
             {
                 Console.Write($"{el} ");
             }
         }
 
-        static List<int> GetList(int n) {
-            Random rnd = new Random();
+        static List<int> GetSyracusaSequence(int num) {
             List<int> sp = new List<int>();
-            for (int i = 0; i < n; i += 1)
+            sp.Add(num);
+            while (num > 1)
             {
-                sp.Add(rnd.Next(0, 100));
+                if (num % 2 == 0)
+                {
+                    num = num / 2;
+                } else
+                {
+                    num = num * 3 + 1;
+                }
+                sp.Add(num);
             }
             return sp;
         }
