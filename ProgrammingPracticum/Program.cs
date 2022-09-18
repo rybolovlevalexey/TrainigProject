@@ -8,25 +8,19 @@ namespace Консольное_приложение
         static void Main(string[] args)
         {
             string[] st = Console.ReadLine().Split();
-            List<int> spisok = new List<int>();
-            foreach (var el in st)
+            foreach (var elem in st)
             {
-                spisok.Add(Convert.ToInt32(el));
-            }
-            int first = spisok[0], last = spisok[st.Length - 1];
-            for (int i = first; i <= last; i += 1)
-            {
-                bool flag = false;
-                foreach (var elem in spisok)
+                bool flag = true;
+                foreach (var letter in elem)
                 {
-                    if (elem == i)
+                    if (Convert.ToString(letter) == "1")
                     {
-                        flag = true;
+                        flag = false;
                     }
                 }
-                if (!flag)
+                if (flag)
                 {
-                    Console.Write($"{i} ");
+                    Console.Write($"{elem} ");
                 }
             }
         }
