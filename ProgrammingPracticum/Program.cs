@@ -7,30 +7,28 @@ namespace Консольное_приложение
     {
         static void Main(string[] args)
         {
-            int num = Convert.ToInt32(Console.ReadLine());
-            List<int> res = new List<int>();
-            res = GetSyracusaSequence(num);
-            foreach(var el in res)
+            string[] st = Console.ReadLine().Split();
+            List<int> spisok = new List<int>();
+            foreach (var el in st)
             {
-                Console.Write($"{el} ");
+                spisok.Add(Convert.ToInt32(el));
             }
-        }
-
-        static List<int> GetSyracusaSequence(int num) {
-            List<int> sp = new List<int>();
-            sp.Add(num);
-            while (num > 1)
+            int first = spisok[0], last = spisok[st.Length - 1];
+            for (int i = first; i <= last; i += 1)
             {
-                if (num % 2 == 0)
+                bool flag = false;
+                foreach (var elem in spisok)
                 {
-                    num = num / 2;
-                } else
-                {
-                    num = num * 3 + 1;
+                    if (elem == i)
+                    {
+                        flag = true;
+                    }
                 }
-                sp.Add(num);
+                if (!flag)
+                {
+                    Console.Write($"{i} ");
+                }
             }
-            return sp;
         }
     }
 }
