@@ -7,26 +7,23 @@ namespace Консольное_приложение
     {
         static void Main(string[] args)
         {
-            string[] st = Console.ReadLine().Split();
-            int flag = 1;
-            List<int> sp = new List<int>();
-            foreach (var elem in st)
-            {
-                if (elem == "0")
-                {
-                    flag = flag * (-1);
-                }
-                if (flag == -1 && elem != "0")
-                {
-                    sp.Add(Convert.ToInt32(elem));
-                }
-            }
-            sp.Sort();
-            sp.Reverse();
-            foreach (var el in sp)
+            int num = Convert.ToInt32(Console.ReadLine());
+            List<int> res = new List<int>();
+            res = GetList(num);
+            foreach(var el in res)
             {
                 Console.Write($"{el} ");
             }
+        }
+
+        static List<int> GetList(int n) {
+            Random rnd = new Random();
+            List<int> sp = new List<int>();
+            for (int i = 0; i < n; i += 1)
+            {
+                sp.Add(rnd.Next(0, 100));
+            }
+            return sp;
         }
     }
 }
