@@ -7,21 +7,35 @@ namespace Консольное_приложение
     {
         static void Main(string[] args)
         {
-            string[] st = Console.ReadLine().Split();
+            string st = Console.ReadLine();
+            Dictionary<string, int> letters = new Dictionary<string, int>();
             foreach (var elem in st)
             {
-                bool flag = true;
-                foreach (var letter in elem)
+                bool flag = false;
+                foreach (var key in letters.Keys)
                 {
-                    if (Convert.ToString(letter) == "1")
+                    if (Convert.ToString(elem) == Convert.ToString(key))
                     {
-                        flag = false;
+                        flag = true;
                     }
                 }
                 if (flag)
                 {
-                    Console.Write($"{elem} ");
+                    letters[Convert.ToString(elem)] = letters[Convert.ToString(elem)] + 1;
+                } else
+                {
+                    letters[Convert.ToString(elem)] = 1;
                 }
+            }
+            List<string> keys = new List<string>();
+            foreach (var key in letters.Keys)
+            {
+                keys.Add(key);
+            }
+            keys.Sort();
+            foreach (var key in keys)
+            {
+                Console.Write($"{key} {letters[key]} ");
             }
         }
     }
