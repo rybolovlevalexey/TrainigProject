@@ -1,33 +1,138 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Diagnostics;
 
-namespace Консольное_приложение
+namespace Быстрое_возведение_в_степень__Сортировки__Бинарный_поиск
 {
     class Program
     {
         static void Main(string[] args)
         {
-            int number = Convert.ToInt32(Console.ReadLine());
-            int stepen = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine(Recursion(number, stepen));
-            Console.WriteLine(Math.Pow(number, stepen));
+            //FastStepen(Convert.ToInt32(Console.ReadLine()), Convert.ToInt32(Console.ReadLine()));
+
+            Sortirovky();
         }
 
-        static int Recursion(int num, int step)
+        static void Sortirovky()
         {
-            if (step == 1)
+            List<int> sp = new List<int>();
+            try
             {
-                return num;
-            } else
+                string strLine;
+                StreamReader file = File.OpenText("C:/Visual Studio Projects/data.txt");    
+                while (null != (strLine = file.ReadLine()))
+                {
+                    sp.Add(Convert.ToInt32(strLine));
+                }
+            } catch (FileNotFoundException ex)
             {
-                if (step % 2 == 1)
+                Console.WriteLine(ex.Message);
+            }
+            int[] sp1 = new int[sp.Count];
+            int[] sp2 = new int[sp.Count];
+            for (int i = 0; i < sp.Count; i += 1)
+            {
+                sp1[i] = sp[i];
+                sp2[i] = sp[i];
+            }
+            
+            Stopwatch stopwatch1 = new Stopwatch();
+            stopwatch1.Start(); // запуск секундомера первой сортировки
+            foreach (var elem in sp1)
+            {
+                Console.Write($"{elem} ");
+            }
+            Console.WriteLine();
+            for (int i = 0; i < sp1.Length; i += 1)
+            {
+                for (int j = 0; j < sp1.Length - 1; j += 1)
                 {
-                    return num * Recursion(num, step - 1);
-                } else
-                {
-                    return Recursion(num, step / 2) * Recursion(num, step / 2);
+                    if (sp1[j] > sp1[j + 1])
+                    {
+                        int a = sp1[j], b = sp1[j + 1];
+                        sp1[j] = b;
+                        sp1[j + 1] = a;
+                    }
                 }
             }
+            foreach (var elem in sp1)
+            {
+                Console.Write($"{elem} ");
+            }
+            Console.WriteLine();
+            stopwatch1.Stop();  // сортировка выполнена, секундомер остановлен
+            Console.WriteLine($"Time: {stopwatch1.ElapsedMilliseconds}");
+            
+            Stopwatch stopwatch2 = new Stopwatch();
+            stopwatch2.Start();   // старт второй сортировки
+            static int[] MergeSort(int[] spisok)
+            {
+                if (spisok.Length > 1)
+                {
+                    int mid = spisok.Length / 2;
+                    int[] left = new int[mid];
+                    int[] rigth = new int[spisok.Length - mid];
+                    for (int ind = 0; ind < spisok.Length; ind += 1)
+                    {
+                        if (ind < mid)
+                        {
+                            left[ind] = spisok[ind];
+                        } else
+                        {
+                            rigth[ind - mid] = spisok[ind];
+                        }
+                    }
+                    MergeSort(left);
+                    MergeSort(rigth);
+                    int i = 0, j = 0, k = 0;
+
+                    while (i < left.Length && j < rigth.Length)
+                    {
+                        if (left[i] < rigth[j])
+                        {
+                            spisok[k] = left[i];
+                            i += 1;
+                        } else
+                        {
+                            spisok[k] = rigth[j];
+                            j += 1;
+                        }
+                        k += 1;
+                    }
+                    while (i < left.Length)
+                    {
+                        spisok[k] = left[i];
+                        i += 1;
+                        k += 1;
+                    }
+                    while (j < rigth.Length)
+                    {
+                        spisok[k] = rigth[j];
+                        j += 1;
+                        k += 1;
+                    }
+                }
+                return spisok;
+            }
+            foreach (var elem in sp2)
+            {
+                Console.Write($"{elem} ");
+            }
+            sp2 = MergeSort(sp2);
+            Console.WriteLine();
+            foreach (var elem in sp2)
+            {
+                Console.Write($"{elem} ");
+            }
+            stopwatch2.Stop();  // конец второй сортировки
+            Console.WriteLine($"Time: {stopwatch2.ElapsedMilliseconds}");
+        }
+
+        static int FastStepen(int num, int stepen)
+        {
+            int res = num;
+            return res;
         }
     }
 }
