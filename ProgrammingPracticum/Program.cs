@@ -11,7 +11,43 @@ namespace Быстрое_возведение_в_степень__Сортиро�
         {
             //FastStepen(Convert.ToInt32(Console.ReadLine()), Convert.ToInt32(Console.ReadLine()));
 
-            Sortirovky();
+            //Sortirovky();
+
+            //Console.WriteLine(BinarySearch(Convert.ToInt32(Console.ReadLine())));
+        }
+
+        static int BinarySearch(int number)
+        {
+            int left = 0, rigth = number, mid = -1;
+            while (rigth - left > 1)
+            {
+                mid = (rigth + left) / 2;
+                if (mid * mid == number)
+                {
+                    return mid;
+                }
+                if (mid * mid < number)
+                {
+                    left = mid;
+                } else
+                {
+                    rigth = mid;
+                }
+                //Console.WriteLine($"{left}, {rigth}");
+            }
+            if (mid * mid == number)
+            {
+                return mid;
+            }
+            if (left * left == number)
+            {
+                return left;
+            }
+            if (rigth * rigth == number)
+            {
+                return rigth;
+            }
+            return -1;
         }
 
         static void Sortirovky()
@@ -129,10 +165,23 @@ namespace Быстрое_возведение_в_степень__Сортиро�
             Console.WriteLine($"Time: {stopwatch2.ElapsedMilliseconds}");
         }
 
-        static int FastStepen(int num, int stepen)
+        static int FastStepen(int num, int step)
         {
-            int res = num;
-            return res;
+            if (step == 1)
+            {
+                return num;
+            }
+            else
+            {
+                if (step % 2 == 1)
+                {
+                    return num * FastStepen(num, step - 1);
+                }
+                else
+                {
+                    return FastStepen(num, step / 2) * FastStepen(num, step / 2);
+                }
+            }
         }
     }
 }
