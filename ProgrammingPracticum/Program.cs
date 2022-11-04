@@ -8,6 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+class SupperBtn : Button
+{
+    bool is_bomb = false;
+    bool is_flagged = false;
+}
+
 namespace Сапёр_3._0
 {
     public partial class Form1 : Form
@@ -100,7 +106,7 @@ namespace Сапёр_3._0
                     Button btn = new Button();
                     btn.Location = new Point(j * btn_size, i * btn_size);
                     btn.Size = new Size(btn_size, btn_size);
-                    btn.MouseClick += new MouseEventHandler(BtnPushedMouse);
+                    btn.MouseUp += new MouseEventHandler(BtnPushedMouse);
                     btn.Name = $"{i};{j}";
                     this.Controls.Add(btn);
                     buttons[i, j] = btn;
@@ -114,14 +120,14 @@ namespace Сапёр_3._0
             Button pressedBtn = sender as Button;
             int coord_i = Convert.ToInt32(pressedBtn.Name.Split(";")[0]);
             int coord_j = Convert.ToInt32(pressedBtn.Name.Split(";")[1]);
+
             if (e.Button == MouseButtons.Left)  // кнопка нажата левой клавишей
             {
                 buttons[coord_i, coord_j].BackColor = Color.Green;
                 LeftBtnPushed(pressedBtn);
-            } else
+            } else  // кнопка нажата правой клавишей
             {
-                buttons[0, 0].Text = Convert.ToString(coord_i);
-                buttons[1, 1].Text = Convert.ToString(coord_j);
+                
                 buttons[coord_i, coord_j].BackColor = Color.Red;
             }
         }
@@ -145,6 +151,13 @@ namespace Сапёр_3._0
                     buttons[i, j].Text = Convert.ToString(field[i, j]);
                 }
             }
+        }
+
+        // обработчик нажатия правой кнопки мыши
+        private void RightBtnPushed(Button pressedBtn)
+        {
+            int coord_i = Convert.ToInt32(pressedBtn.Name.Split(";")[0]);
+            int coord_j = Convert.ToInt32(pressedBtn.Name.Split(";")[1]);
         }
     }
 }
