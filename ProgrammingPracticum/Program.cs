@@ -8,23 +8,43 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-class SupperBtn : Button
-{
-    bool is_bomb = false;
-    bool is_flagged = false;
-}
-
 namespace Сапёр_3._0
 {
+
     public partial class Form1 : Form
     {
+        public class SupperBtn : Button
+        {
+            bool bomb = false;
+            public bool is_flagged = false;
+
+            public void make_bombed()
+            {
+                bomb = true;
+            }
+            public bool is_bomb()
+            {
+                return bomb;
+            }
+            public void change_flagged()
+            {
+                if (is_flagged)
+                {
+                    is_flagged = false;
+                }
+                else
+                {
+                    is_flagged = true;
+                }
+            }
+        }
         // константы необходимые для выполнения программы
         public const int field_size = 10;
         public const int field_cnt_bombs = 10;
         public const int btn_size = 50;
         public int[,] field = new int[field_size, field_size];
-        public Button[,] buttons = new Button[field_size, field_size];
-        public List<String> sp_moves = new List<String>();
+        public SupperBtn[,] buttons = new SupperBtn[field_size, field_size];
+        public int cnt_btn_opened = 0;
         bool isFirstMove = true;
 
         // инициализация
@@ -81,6 +101,8 @@ namespace Сапёр_3._0
                     }
                     if (field[i, j] != -1)
                         field[i, j] = bombs_around;
+                    else
+                        buttons[i, j].make_bombed();
                 }
             }
         }
@@ -103,9 +125,10 @@ namespace Сапёр_3._0
             {
                 for (int j = 0; j < field_size; j += 1)
                 {
-                    Button btn = new Button();
+                    SupperBtn btn = new SupperBtn();
                     btn.Location = new Point(j * btn_size, i * btn_size);
                     btn.Size = new Size(btn_size, btn_size);
+                    btn.BackColor = Color.LightSteelBlue;
                     btn.MouseUp += new MouseEventHandler(BtnPushedMouse);
                     btn.Name = $"{i};{j}";
                     this.Controls.Add(btn);
@@ -117,24 +140,37 @@ namespace Сапёр_3._0
         
         private void BtnPushedMouse(object sender, MouseEventArgs e)
         {
-            Button pressedBtn = sender as Button;
+            SupperBtn pressedBtn = sender as SupperBtn;
             int coord_i = Convert.ToInt32(pressedBtn.Name.Split(";")[0]);
             int coord_j = Convert.ToInt32(pressedBtn.Name.Split(";")[1]);
 
             if (e.Button == MouseButtons.Left)  // кнопка нажата левой клавишей
             {
-                buttons[coord_i, coord_j].BackColor = Color.Green;
                 LeftBtnPushed(pressedBtn);
             } else  // кнопка нажата правой клавишей
             {
-                
-                buttons[coord_i, coord_j].BackColor = Color.Red;
+                RightBtnPushed(pressedBtn);
             }
         }
-        
+
+        private bool CheckWin()
+        {
+            int green_cnt = 0;
+            for (int i = 0; i < field_size; i += 1)
+            {
+                for (int j = 0; j < field_size; j += 1)
+                {
+                    if (buttons[i, j].BackColor == Color.Green)
+                        green_cnt += 1;
+                }
+            }
+            if (green_cnt + field_cnt_bombs == field_size * field_size)
+                return true;
+            return false;
+        }
 
         // обработчик нажатия левой кнопки мыши
-        private void LeftBtnPushed(Button pressedBtn)
+        private void LeftBtnPushed(SupperBtn pressedBtn)
         {
             int coord_i = Convert.ToInt32(pressedBtn.Name.Split(";")[0]);
             int coord_j = Convert.ToInt32(pressedBtn.Name.Split(";")[1]);
@@ -143,21 +179,95 @@ namespace Сапёр_3._0
                 MakeBombs(coord_i, coord_j);
                 isFirstMove = false;
             }
-            buttons[coord_i, coord_j].Text = Convert.ToString(field[coord_i, coord_j]);
-            for (int i = 0; i < field_size; i += 1)
-            {
-                for (int j = 0; j < field_size; j += 1)
+            if (!buttons[coord_i, coord_j].is_flagged) { 
+
+                if (buttons[coord_i, coord_j].is_bomb())
                 {
-                    buttons[i, j].Text = Convert.ToString(field[i, j]);
+                    for (int i = 0; i < field_size; i += 1)
+                    {
+                        for (int j = 0; j < field_size; j += 1)
+                        {
+                            buttons[i, j].Text = Convert.ToString(field[i, j]);
+                            buttons[i, j].BackColor = Color.Red;
+                        }
+                    }
+                    MessageBox.Show("Поражение");
+                }
+                else
+                {
+                    buttons[coord_i, coord_j].BackColor = Color.Green;
+                    buttons[coord_i, coord_j].Enabled = false;
+                    buttons[coord_i, coord_j].Text = Convert.ToString(field[coord_i, coord_j]);
+                    if (field[coord_i, coord_j] == 0)
+                    {
+                        OpenAllZeros(coord_i, coord_j);
+                    }
+                }
+
+                if (CheckWin())
+                {
+                    for (int i = 0; i < field_size; i += 1)
+                    {
+                        for (int j = 0; j < field_size; j += 1)
+                        {
+                            buttons[i, j].Text = Convert.ToString(field[i, j]);
+                        }
+                    }
+                    MessageBox.Show("Победа");
+                }
+            }
+        }
+        
+        private void OpenAllZeros(int x, int y)  // рекурсивное открытие рядом стоящих, пустых ячеек
+        {
+            for (int k = x - 1; k < x + 2; k += 1)
+            {
+                for (int m = y - 1; m < y + 2; m += 1)
+                {
+                    if (k < 0 || m < 0 || k >= field_size || m >= field_size)
+                        continue;
+                    //MessageBox.Show($"{k} {m}");
+                    if (k == x && y == m)
+                        continue;
+                    if (!buttons[k, m].Enabled)
+                        continue;
+                    //if (buttons[k, m].Text.Length == 0)
+                    //    continue;
+                    if (field[k, m] == 0)
+                    {
+                        buttons[k, m].BackColor = Color.Green;
+                        buttons[k, m].Text = Convert.ToString(field[k, m]);
+                        buttons[k, m].Enabled = false;
+                        OpenAllZeros(k, m);
+                    }
+                    else if (field[k, m] > 0)
+                    {
+                        buttons[k, m].BackColor = Color.Green;
+                        buttons[k, m].Text = Convert.ToString(field[k, m]);
+                        buttons[k, m].Enabled = false;
+                        break;
+                    }
+
                 }
             }
         }
 
         // обработчик нажатия правой кнопки мыши
-        private void RightBtnPushed(Button pressedBtn)
+        private void RightBtnPushed(SupperBtn pressedBtn)
         {
             int coord_i = Convert.ToInt32(pressedBtn.Name.Split(";")[0]);
             int coord_j = Convert.ToInt32(pressedBtn.Name.Split(";")[1]);
+            if (pressedBtn.Text.Length == 0)
+            {
+                buttons[coord_i, coord_j].change_flagged();
+            }
+            if (pressedBtn.is_flagged)
+            {
+                buttons[coord_i, coord_j].BackColor = Color.Orange;
+            } else
+            {
+                buttons[coord_i, coord_j].BackColor = Color.LightSteelBlue;
+            }
         }
     }
 }
