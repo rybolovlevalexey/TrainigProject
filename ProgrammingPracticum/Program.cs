@@ -129,6 +129,8 @@ namespace Сапёр_3._0
                     btn.Location = new Point(j * btn_size, i * btn_size);
                     btn.Size = new Size(btn_size, btn_size);
                     btn.BackColor = Color.LightSteelBlue;
+                    btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular,
+                        System.Drawing.GraphicsUnit.Point, ((byte)(204)));
                     btn.MouseUp += new MouseEventHandler(BtnPushedMouse);
                     btn.Name = $"{i};{j}";
                     this.Controls.Add(btn);
@@ -137,7 +139,7 @@ namespace Сапёр_3._0
             }
         }
         
-        
+        // общий обработчик нажатия на кнопку
         private void BtnPushedMouse(object sender, MouseEventArgs e)
         {
             SupperBtn pressedBtn = sender as SupperBtn;
