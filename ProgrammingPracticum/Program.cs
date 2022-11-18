@@ -4,41 +4,13 @@ using System.Text;
 
 namespace Урок18._11._22
 {
-    class MyList
+    class List_item
     {
-        public List_item head = new List_item("");
-        public MyList() { }
-        public MyList(string s) { head.Value = s; }
-
-        public void Append(string st)
+        public string Value;
+        public List_item Next = null;
+        public List_item(string s) 
         {
-            List_item temp = head;
-            while (temp.Next != null)
-            {
-                temp = temp.Next;
-            }
-            List_item elem = new List_item(st);
-            temp.Next = elem;
-        }
-        public void Printn()
-        {
-            List_item temp = head;
-            while (temp.Next != null)
-            {
-                Console.WriteLine($"{temp.Value} ");
-                temp = temp.Next;
-            }
-            Console.WriteLine($"{temp.Value} ");
-        }
-        public void Prints()
-        {
-            List_item temp = head;
-            while (temp.Next != null)
-            {
-                Console.Write($"{temp.Value} ");
-                temp = temp.Next;
-            }
-            Console.Write($"{temp.Value} ");
+            Value = s;
         }
     }
 }
