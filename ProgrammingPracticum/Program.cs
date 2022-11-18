@@ -1,66 +1,18 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace Самостоятельная_работа_WindowsForm
+namespace Урок18._11._22
 {
-    public partial class Form1 : Form
+    class Program
     {
-        public bool flag = true;
-        Elephant el1 = new Elephant() { Name = "Lloyd", EarSize = 40 };
-        Elephant el2 = new Elephant() { Name = "Lucinda", EarSize = 33 };
-        public Form1()
+        static void Main(string[] args)
         {
-            InitializeComponent();
-        }
-        class Elephant
-        {
-            public string Name { get; set; }
-            public int EarSize { get; set; }
-            public void WhoAmI()
+            MyList ml = new MyList("a");
+            string st = "bcdef";
+            foreach (var el in st)
             {
-                MessageBox.Show($"My ears are {EarSize} inches tall.", $"{Name} says...");
+                ml.Append(Convert.ToString(el));
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (flag)
-            {
-                el1.WhoAmI();
-            } else
-            {
-                el2.WhoAmI();
-            }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (flag)
-            {
-                el2.WhoAmI();
-            }
-            else
-            {
-                el1.WhoAmI();
-            }
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            if (flag)
-            {
-                flag = false;
-            } else
-            {
-                flag = true;
-            }
+            ml.Prints();
         }
     }
 }
