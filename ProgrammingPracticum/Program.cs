@@ -1,18 +1,44 @@
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Урок18._11._22
 {
-    class Program
+    class MyList
     {
-        static void Main(string[] args)
+        public List_item head = new List_item("");
+        public MyList() { }
+        public MyList(string s) { head.Value = s; }
+
+        public void Append(string st)
         {
-            MyList ml = new MyList("a");
-            string st = "bcdef";
-            foreach (var el in st)
+            List_item temp = head;
+            while (temp.Next != null)
             {
-                ml.Append(Convert.ToString(el));
+                temp = temp.Next;
             }
-            ml.Prints();
+            List_item elem = new List_item(st);
+            temp.Next = elem;
+        }
+        public void Printn()
+        {
+            List_item temp = head;
+            while (temp.Next != null)
+            {
+                Console.WriteLine($"{temp.Value} ");
+                temp = temp.Next;
+            }
+            Console.WriteLine($"{temp.Value} ");
+        }
+        public void Prints()
+        {
+            List_item temp = head;
+            while (temp.Next != null)
+            {
+                Console.Write($"{temp.Value} ");
+                temp = temp.Next;
+            }
+            Console.Write($"{temp.Value} ");
         }
     }
 }
