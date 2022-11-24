@@ -9,6 +9,54 @@ namespace Урок18._11._22
         public List_item head = new List_item("Null");
         public MyList() { }
         public MyList(string s) { head.Value = s; }
+        public void DeleteDublicates()
+        {
+            List_item cur = head;
+            while (cur.Next != null)
+            {
+                List_item cur1 = cur.Next;
+                List_item previous = cur;
+                while (cur1.Next != null)
+                {
+                    Console.WriteLine("i am here");
+                    if (cur1.Value == cur.Value)
+                    {
+                        previous.Next = cur1.Next;
+                    }
+                    else
+                    {
+                        previous = cur1;
+                    }
+                    cur1 = cur1.Next;
+                }
+                if (cur1.Value == cur.Value)
+                {
+                    previous.Next = cur1.Next;
+                }
+                cur = cur.Next;
+            }
+        }
+        public void Add(string st)
+        {
+            if (this.Length() == 1 && this.head.Value == "Null")
+            {
+                this.head.Value = st;
+            }
+            else
+            {
+                List_item temp = head;
+                if (head.Value == st)
+                    return;
+                while (temp.Next != null)
+                {
+                    temp = temp.Next;
+                    if (temp.Value == st)
+                        return;
+                }
+                List_item elem = new List_item(st);
+                temp.Next = elem;
+            }
+        }
         public void TurningAround()
         {
             if (this.Length() == 1)
