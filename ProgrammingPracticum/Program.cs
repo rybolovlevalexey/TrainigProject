@@ -6,9 +6,40 @@ namespace Урок18._11._22
 {
     class MyList
     {
-        public List_item head = new List_item("");
+        public List_item head = new List_item("Null");
         public MyList() { }
         public MyList(string s) { head.Value = s; }
+        public void TurningAround()
+        {
+            if (this.Length() == 1)
+            {
+                return;
+            }
+            if (this.Length() == 2)
+            {
+                List_item first_ = head;
+                List_item second_ = first_.Next;
+                first_.Next = null;
+                second_.Next = first_;
+                this.head = second_;
+                return;
+            }
+            List_item first = head;
+            List_item second = first.Next;
+            first.Next = null;
+            List_item third = second.Next;
+            second.Next = first;
+            while (third.Next != null) 
+            {
+                List_item next_link = third.Next;
+                first = second;
+                second = third;
+                third = next_link;
+                second.Next = first;
+            }
+            this.head = third;
+            this.head.Next = second;
+        }
         public bool Is_Palindrom()
         {
             int dl = this.Length();
@@ -141,13 +172,20 @@ namespace Урок18._11._22
         }
         public void Append(string st)
         {
-            List_item temp = head;
-            while (temp.Next != null)
+            if (this.Length() == 1 && this.head.Value == "Null")
             {
-                temp = temp.Next;
+                this.head.Value = st;
             }
-            List_item elem = new List_item(st);
-            temp.Next = elem;
+            else
+            {
+                List_item temp = head;
+                while (temp.Next != null)
+                {
+                    temp = temp.Next;
+                }
+                List_item elem = new List_item(st);
+                temp.Next = elem;
+            }
         }
         public void Printn()
         {
