@@ -9,6 +9,44 @@ namespace Урок18._11._22
         public List_item head = new List_item("Null");
         public MyList() { }
         public MyList(string s) { head.Value = s; }
+        // индексация с 1
+        public void DeleteByIndex(int index)
+        {
+            if (this.Length() < index || index <= 0)
+            {
+                Console.WriteLine("Введён некорректный индекс");
+                return;
+            }
+            List_item cur = head;
+            if (index == 0)
+            {
+                head.Value = cur.Next.Value;
+                head.Next = cur.Next.Next;
+                return;
+            }
+            int i = 1;
+            while (cur.Next != null)
+            {
+                List_item previous = cur;
+                cur = cur.Next;
+                i += 1;
+                if (i == index)
+                {
+                    previous.Next = cur.Next;
+                    return;
+                }
+            }
+            
+        }
+        public void DeleteByValue(string value)
+        {
+            List_item cur = head;
+            if (cur.Value == value)
+            {
+                head = cur.Next;
+                return;
+            }
+        }
         public void DeleteDublicates()
         {
             List_item cur = head;
@@ -18,7 +56,6 @@ namespace Урок18._11._22
                 List_item previous = cur;
                 while (cur1.Next != null)
                 {
-                    Console.WriteLine("i am here");
                     if (cur1.Value == cur.Value)
                     {
                         previous.Next = cur1.Next;
