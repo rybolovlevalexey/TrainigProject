@@ -9,6 +9,32 @@ namespace Урок18._11._22
         public List_item head = new List_item("Null");
         public MyList() { }
         public MyList(string s) { head.Value = s; }
+        public void DeleteWithoutUsingHead(List_item element)
+        {
+            if (element.Next == null)
+            {
+                element = null;
+            }
+            else
+            {
+                while (element.Next != null)
+                {
+                    element.Value = element.Next.Value;
+                    if (element.Next.Next == null)
+                    {
+                        element.Next = null;
+                        break;
+                    }
+                    element = element.Next;
+                }
+            }
+        }
+        public void AddToTop(string st)
+        {
+            List_item cur = head;
+            head = new List_item(st);
+            head.Next = cur;
+        }
         // индексация с 1
         public void DeleteByIndex(int index)
         {
@@ -18,7 +44,7 @@ namespace Урок18._11._22
                 return;
             }
             List_item cur = head;
-            if (index == 0)
+            if (index == 1)
             {
                 head.Value = cur.Next.Value;
                 head.Next = cur.Next.Next;
@@ -43,8 +69,19 @@ namespace Урок18._11._22
             List_item cur = head;
             if (cur.Value == value)
             {
-                head = cur.Next;
+                head.Value = cur.Next.Value;
+                head.Next = cur.Next.Next;
                 return;
+            }
+            while (cur.Next != null)
+            {
+                List_item previous = cur;
+                cur = cur.Next;
+                if (cur.Value == value)
+                {
+                    previous.Next = cur.Next;
+                    return;
+                }
             }
         }
         public void DeleteDublicates()
