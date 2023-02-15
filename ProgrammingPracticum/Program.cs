@@ -81,6 +81,11 @@ namespace Длинная_арифметика
             for (int i = 0; i < max_len; i += 1)
             {
                 int one = Convert.ToInt32(Convert.ToString(rx[i]));
+                if (i >= y.Length && flag_mem && one != 0)
+                {
+                    one -= 1;
+                    flag_mem = false;
+                }
                 int two = 0;
                 if (i < y.Length)
                 {
@@ -130,9 +135,11 @@ namespace Длинная_арифметика
             {
                 case "+":
                     string sum_result = Summa(first, second);
+                    Console.WriteLine(sum_result);
                     break;
                 case "-":
                     string minus_result = Minus(first, second);
+                    Console.WriteLine(minus_result);
                     break;
             }
         }
