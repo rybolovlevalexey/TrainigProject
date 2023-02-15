@@ -1,333 +1,140 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Урок18._11._22
+namespace Длинная_арифметика
 {
-    class MyList
+    class Program
     {
-        public List_item head = new List_item("Null");
-        public MyList() { }
-        public MyList(string s) { head.Value = s; }
-        public void DeleteWithoutUsingHead(List_item element)
+        public static string Summa(string x, string y)
         {
-            if (element.Next == null)
+            string ans = "";
+            int max_len = 0;
+            string rx = "", ry = "";
+            foreach (var el in x)
             {
-                element = null;
+                rx = el + rx;
+            }
+            foreach (var el in y)
+            {
+                ry = el + ry;
+            }
+            if (x.Length >= y.Length)
+            {
+                max_len = x.Length;
             }
             else
             {
-                while (element.Next != null)
+                max_len = y.Length;
+            }
+            int mem = 0;
+            for (int i = 0; i < max_len; i += 1)
+            {
+                int res = 0;
+                res += mem;
+                if (i < x.Length && i < y.Length)
                 {
-                    element.Value = element.Next.Value;
-                    if (element.Next.Next == null)
+                    res += (Convert.ToInt32(Convert.ToString(rx[i])) + Convert.ToInt32(Convert.ToString(ry[i])));
+                }
+                else
+                {
+                    if (i < x.Length)
                     {
-                        element.Next = null;
-                        break;
+                        res += Convert.ToInt32(Convert.ToString(rx[i]));
                     }
-                    element = element.Next;
-                }
-            }
-        }
-        public void AddToTop(string st)
-        {
-            List_item cur = head;
-            head = new List_item(st);
-            head.Next = cur;
-        }
-        // индексация с 1
-        public void DeleteByIndex(int index)
-        {
-            if (this.Length() < index || index <= 0)
-            {
-                Console.WriteLine("Введён некорректный индекс");
-                return;
-            }
-            List_item cur = head;
-            if (index == 1)
-            {
-                head.Value = cur.Next.Value;
-                head.Next = cur.Next.Next;
-                return;
-            }
-            int i = 1;
-            while (cur.Next != null)
-            {
-                List_item previous = cur;
-                cur = cur.Next;
-                i += 1;
-                if (i == index)
-                {
-                    previous.Next = cur.Next;
-                    return;
-                }
-            }
-            
-        }
-        public void DeleteByValue(string value)
-        {
-            List_item cur = head;
-            if (cur.Value == value)
-            {
-                head.Value = cur.Next.Value;
-                head.Next = cur.Next.Next;
-                return;
-            }
-            while (cur.Next != null)
-            {
-                List_item previous = cur;
-                cur = cur.Next;
-                if (cur.Value == value)
-                {
-                    previous.Next = cur.Next;
-                    return;
-                }
-            }
-        }
-        public void DeleteDublicates()
-        {
-            List_item cur = head;
-            while (cur.Next != null)
-            {
-                List_item cur1 = cur.Next;
-                List_item previous = cur;
-                while (cur1.Next != null)
-                {
-                    if (cur1.Value == cur.Value)
+                    if (i < y.Length)
                     {
-                        previous.Next = cur1.Next;
+                        res += Convert.ToInt32(Convert.ToString(ry[i]));
+                    }
+                }
+                mem = 0;
+                ans = Convert.ToString(res % 10) + ans;
+                mem = res / 10;
+            }
+            if (mem != 0)
+            {
+                ans = mem + ans;
+            }
+            return ans;
+        }
+
+        public static string Minus(string x, string y)
+        {
+            string ans = "";
+            int max_len = 0;
+            string rx = "", ry = "";
+            foreach (var el in x)
+            {
+                rx = el + rx;
+            }
+            foreach (var el in y)
+            {
+                ry = el + ry;
+            }
+            if (x.Length >= y.Length)
+            {
+                max_len = x.Length;
+            }
+            else
+            {
+                max_len = y.Length;
+            }
+            bool flag_mem = false;
+            for (int i = 0; i < max_len; i += 1)
+            {
+                int one = Convert.ToInt32(Convert.ToString(rx[i]));
+                int two = 0;
+                if (i < y.Length)
+                {
+                    two = Convert.ToInt32(Convert.ToString(ry[i]));
+                }
+
+                if (one > two)
+                {
+                    if (flag_mem)
+                        ans = Convert.ToString(one - two - 1) + ans;
+                    else
+                        ans = Convert.ToString(one - two) + ans;
+                    flag_mem = false;
+                }
+
+                if (one == two)
+                {
+                    if (!flag_mem)
+                    {
+                        ans = Convert.ToString(one - two) + ans;
+                        flag_mem = false;
                     }
                     else
                     {
-                        previous = cur1;
+                        ans = Convert.ToString(one - two - 1 + 10) + ans;
+                        flag_mem = true;
                     }
-                    cur1 = cur1.Next;
                 }
-                if (cur1.Value == cur.Value)
-                {
-                    previous.Next = cur1.Next;
-                }
-                cur = cur.Next;
-            }
-        }
-        public void Add(string st)
-        {
-            if (this.Length() == 1 && this.head.Value == "Null")
-            {
-                this.head.Value = st;
-            }
-            else
-            {
-                List_item temp = head;
-                if (head.Value == st)
-                    return;
-                while (temp.Next != null)
-                {
-                    temp = temp.Next;
-                    if (temp.Value == st)
-                        return;
-                }
-                List_item elem = new List_item(st);
-                temp.Next = elem;
-            }
-        }
-        public void TurningAround()
-        {
-            if (this.Length() == 1)
-            {
-                return;
-            }
-            if (this.Length() == 2)
-            {
-                List_item first_ = head;
-                List_item second_ = first_.Next;
-                first_.Next = null;
-                second_.Next = first_;
-                this.head = second_;
-                return;
-            }
-            List_item first = head;
-            List_item second = first.Next;
-            first.Next = null;
-            List_item third = second.Next;
-            second.Next = first;
-            while (third.Next != null) 
-            {
-                List_item next_link = third.Next;
-                first = second;
-                second = third;
-                third = next_link;
-                second.Next = first;
-            }
-            this.head = third;
-            this.head.Next = second;
-        }
-        public bool Is_Palindrom()
-        {
-            int dl = this.Length();
-            for (int i = 0; i < dl / 2; i += 1)
-            {
-                if (this.ReturnElementByIndex(i).Value != this.ReturnElementByIndex((i + 1) * (-1)).Value)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-        public int Length()
-        {
-            if (head.Value == "" && head.Next == null)
-            {
-                return 0;
-            }
-            int dlina = 1;
-            List_item cur = head;
-            while (cur.Next != null)
-            {
-                dlina += 1;
-                cur = cur.Next;
-            }
-            return dlina;
-        }
 
-        // индексация: слева направо от 0, справа налево от -1
-        public List_item ReturnElementByIndex(int ind)
-        {
-            List_item cur = head;
-            if (ind < 0)
-            {
-                int i = 1;
-                ind = Math.Abs(ind);
-                while (cur.Next != null)
+                if (one < two)
                 {
-                    if (i + ind - 1 == this.Length())
-                    {
-                        return cur;
-                    }
-                    cur = cur.Next;
-                    i += 1;
-                }
-                if (i - 1 + ind == this.Length())
-                {
-                    return cur;
-                }
-            } else
-            {
-                int i = 0;
-                while (cur.Next != null)
-                {
-                    if (i == ind)
-                    {
-                        return cur;
-                    }
-                    cur = cur.Next;
-                    i += 1;
-                }
-                if (i == ind)
-                {
-                    return cur;
+                    if (flag_mem)
+                        ans = Convert.ToString(one - two + 9) + ans;
+                    else
+                        ans = Convert.ToString(one - two + 10) + ans;
+                    flag_mem = true;
                 }
             }
-            return new List_item("error");
+            return ans;
         }
-
-        public void Element_IndFromEnd(int ind)
+        static void Main(string[] args)
         {
-            int i = 1;
-            List_item cur = head;
-            bool flag = false;
-            if (ind <= 0)
+            string first = Console.ReadLine();
+            string deyst = Console.ReadLine();
+            string second = Console.ReadLine();
+            switch (deyst)
             {
-                flag = true;
-                Console.WriteLine("Полученный индекс не соответствует размерам списка");
+                case "+":
+                    string sum_result = Summa(first, second);
+                    break;
+                case "-":
+                    string minus_result = Minus(first, second);
+                    break;
             }
-            while (cur.Next != null && !flag)
-            {
-                if (i + ind - 1 == this.Length())
-                {
-                    Console.WriteLine(cur.Value);
-                    flag = true;
-                }
-                cur = cur.Next;
-                i += 1;
-            }
-            if (i - 1 + ind == this.Length() && !flag)
-            {
-                Console.WriteLine(cur.Value);
-                flag = true;
-            }
-            if (!flag)
-            {
-                Console.WriteLine("Полученный индекс не соответствует размерам списка");
-            }
-        }
-
-        public void Element_IndFromStart(int ind)
-        {
-            int i = 1;
-            List_item cur = head;
-            bool flag = false;
-            if (ind <= 0)
-            {
-                flag = true;
-                Console.WriteLine("Полученный индекс не соответствует размерам списка");
-            }
-            while (cur.Next != null && !flag)
-            {
-                if (i == ind)
-                {
-                    Console.WriteLine(cur.Value);
-                    flag = true;
-                }
-                cur = cur.Next;
-                i += 1;
-            }
-            if (i == ind && !flag)
-            {
-                Console.WriteLine(cur.Value);
-                flag = true;
-            }
-            if (!flag)
-            {
-                Console.WriteLine("Полученный индекс не соответствует размерам списка");
-            }
-        }
-        public void Append(string st)
-        {
-            if (this.Length() == 1 && this.head.Value == "Null")
-            {
-                this.head.Value = st;
-            }
-            else
-            {
-                List_item temp = head;
-                while (temp.Next != null)
-                {
-                    temp = temp.Next;
-                }
-                List_item elem = new List_item(st);
-                temp.Next = elem;
-            }
-        }
-        public void Printn()
-        {
-            List_item temp = head;
-            while (temp.Next != null)
-            {
-                Console.WriteLine($"{temp.Value} ");
-                temp = temp.Next;
-            }
-            Console.WriteLine($"{temp.Value} ");
-        }
-        public void Prints()
-        {
-            List_item temp = head;
-            while (temp.Next != null)
-            {
-                Console.Write($"{temp.Value} ");
-                temp = temp.Next;
-            }
-            Console.Write($"{temp.Value}\n");
         }
     }
 }
