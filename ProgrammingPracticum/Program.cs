@@ -55,7 +55,6 @@ namespace Длинная_арифметика
             }
             return ans;
         }
-
         public static string Minus(string x, string y)
         {
             string ans = "";
@@ -126,6 +125,22 @@ namespace Длинная_арифметика
             }
             return ans;
         }
+        public static bool IsBiggerThan(string x, string y)
+        {
+            if (x.Length > y.Length)
+                return true;
+            if (x.Length < y.Length)
+                return false;
+            
+            for (int i = 0; i < x.Length; i += 1)
+            {
+                if (Convert.ToInt32(Convert.ToString(x[i])) > Convert.ToInt32(Convert.ToString(y[i])))
+                    return true;
+                if (Convert.ToInt32(Convert.ToString(x[i])) < Convert.ToInt32(Convert.ToString(y[i])))
+                    return false;
+            }
+            return true;
+        }
         static void Main(string[] args)
         {
             string first = Console.ReadLine();
@@ -134,11 +149,19 @@ namespace Длинная_арифметика
             switch (deyst)
             {
                 case "+":
-                    string sum_result = Summa(first, second);
+                    string sum_result = "";
+                    if (first[0] != '-' && second[0] != '-')
+                        sum_result = Summa(first, second);
+                    if (first[0] == '-' && second[0] == '-')
+                        sum_result = Summa(first, second);
                     Console.WriteLine(sum_result);
                     break;
                 case "-":
-                    string minus_result = Minus(first, second);
+                    string minus_result = "";
+                    if (IsBiggerThan(first, second))
+                        minus_result = Minus(first, second);
+                    else
+                        minus_result = "-" + Minus(second, first);
                     Console.WriteLine(minus_result);
                     break;
             }
