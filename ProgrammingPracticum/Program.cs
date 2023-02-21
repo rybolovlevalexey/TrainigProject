@@ -86,7 +86,39 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            
+
+            Queue que = new Queue();
+            string st = Console.ReadLine();
+            while (st != "exit")
+            {
+                string[] sp = st.Split();
+                if (sp.Length == 2)
+                {
+                    que.push(Convert.ToInt32(sp[1]));
+                } else
+                {
+                    switch (sp[0])
+                    {
+                        case "pop":
+                            que.pop();
+                            break;
+                        case "front":
+                            que.front();
+                            break;
+                        case "size":
+                            que.size();
+                            break;
+                        case "clear":
+                            que.clear();
+                            break;
+                        case "exit":
+                            que.exit();
+                            break;
+                    }
+                }
+                st = Console.ReadLine();
+            }
+            que.exit();
         }
     }
 }
