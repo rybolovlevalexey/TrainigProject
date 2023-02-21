@@ -2,123 +2,72 @@ using System;
 
 namespace ConsoleApp1
 {
-    public class QueueElem
-    {
-        public int Value;
-        public QueueElem Next = null;
-        public QueueElem(int val)
-        {
-            Value = val;
-        }
-    }
-
-    class Queue
-    {
-        public QueueElem Head;
-        public Queue()
-        {
-            Head = null;
-        }
-        public void push(int elem)
-        {
-            if (Head is null)
-                Head = new QueueElem(elem);
-            else
-            {
-                QueueElem cur = Head;
-                while (!(cur.Next is null))
-                    cur = cur.Next;
-                cur.Next = new QueueElem(elem);
-            }
-            Console.WriteLine("ok");
-        }
-
-        public void pop()
-        {
-            if (Head is null)
-            {
-                Console.WriteLine("error");
-            }
-            else
-            {
-                int value = Head.Value;
-                Head = Head.Next;
-                Console.WriteLine(value);
-            }
-        }
-        public void front()
-        {
-            if (Head is null)
-                Console.WriteLine("error");
-            else
-                Console.WriteLine(Head.Value);
-        }
-
-        public void size()
-        {
-            QueueElem cur = Head;
-            int length = 0;
-            if (cur is null)
-            {
-                length = 0;
-            } else
-            {
-                while (!(cur is null))
-                {
-                    length += 1;
-                    cur = cur.Next;
-                }
-            }
-            Console.WriteLine(length);
-        }
-
-        public void clear()
-        {
-            Head = null;
-            Console.WriteLine("ok");
-        }
-        public void exit()
-        {
-            Console.WriteLine("bye");
-        }
-    }
     class Program
     {
+        class Answer
+        {
+            public int dlina = -1;
+            public string stroka = "";
+        }
         static void Main(string[] args)
         {
-
-            Queue que = new Queue();
+            string alphabet = "zxcvbnmlkjhgfdsaqwertyuiop";
+            int k = Convert.ToInt32(Console.ReadLine());
             string st = Console.ReadLine();
-            while (st != "exit")
+            Answer ans = new Answer();
+
+            foreach (var letter in alphabet)
             {
-                string[] sp = st.Split();
-                if (sp.Length == 2)
+                int end = 0;
+                int cnt = k;
+                for (int beg = 0; beg < st.Length; beg += 1)
                 {
-                    que.push(Convert.ToInt32(sp[1]));
-                } else
-                {
-                    switch (sp[0])
+                    if (st[beg] != letter && cnt > 0)
+                        cnt -= 1;
+                    if (beg != 0 && st[beg - 1] != letter)
+                        cnt += 1;
+
+                    while (end < st.Length)
                     {
-                        case "pop":
-                            que.pop();
-                            break;
-                        case "front":
-                            que.front();
-                            break;
-                        case "size":
-                            que.size();
-                            break;
-                        case "clear":
-                            que.clear();
-                            break;
-                        case "exit":
-                            que.exit();
-                            break;
+                        if (end > beg)
+                        {
+                            if (st[end] == letter && cnt == 0)
+                            {
+                                int dl = end - beg + 1;
+                                if (ans.dlina == -1 || dl > ans.dlina)
+                                {
+                                    ans.dlina = dl;
+                                    ans.stroka = st[beg..(end + 1)];
+                                }
+                            }
+                            if (st[end] != letter && cnt == 0)
+                                break;
+                            if (st[end] != letter && cnt > 0)
+                            {
+                                cnt -= 1;
+                                int dl = end - beg + 1;
+                                if (ans.dlina == 0 || dl > ans.dlina)
+                                {
+                                    ans.dlina = dl;
+                                    ans.stroka = st[beg..(end + 1)];
+                                }
+                            }
+                            if (st[end] == letter && cnt > 0)
+                            {
+                                int dl = end - beg + 1;
+                                if (ans.dlina == 0 || dl > ans.dlina)
+                                {
+                                    ans.dlina = dl;
+                                    ans.stroka = st[beg..(end + 1)];
+                                }
+                            }
+                        }
+                        end += 1;
+
                     }
                 }
-                st = Console.ReadLine();
             }
-            que.exit();
+            Console.WriteLine(ans.dlina);
         }
     }
 }
