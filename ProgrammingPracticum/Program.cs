@@ -10,6 +10,35 @@ namespace Урок18._11._22
         public List_item tail = new List_item(null);
         public MyList() { }
         public MyList(string s) { head.Value = s; tail = head; }
+        public MyList(string[] mas_s)
+        {
+            if (mas_s.Length == 0)
+                return;
+            if (mas_s.Length == 1)
+            {
+                head.Value = mas_s[0]; tail = head;
+                return;
+            }
+            List_item cur = head;
+            head.Value = mas_s[0];
+            for (int i = 1; i < mas_s.Length; i += 1)
+            {
+                if (i + 1 != mas_s.Length)
+                {
+                    List_item elem = new List_item(mas_s[i]);
+                    elem.Previous = cur;
+                    cur.Next = elem;
+                    cur = elem;
+                }
+                else
+                {
+                    List_item elem = new List_item(mas_s[i]);
+                    elem.Previous = cur;
+                    cur.Next = elem;
+                    tail = elem;
+                }
+            }
+        }
         public override string ToString()
         {
             string result = "";
@@ -444,6 +473,7 @@ namespace Урок18._11._22
                 List_item elem = new List_item(st);
                 elem.Previous = temp;
                 temp.Next = elem;
+                tail = elem;
             }
         }
         public void Printn()
