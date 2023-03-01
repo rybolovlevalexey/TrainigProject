@@ -46,19 +46,19 @@ namespace дз_по_тетсированию_Двусвязных_списков
 
             ml.head = ml.head.Next;
             ml.head.Previous = null;
-            int ind = ml.Length() - 1;
+            int ind_Indicate = ml.Length() - 1;
             cur = ml.tail;
             while (cur != null)
             {
                 if (cur.Value == "the")
                     break;
                 cur = cur.Previous;
-                ind -= 1;
+                ind_Indicate -= 1;
             }
             Console.WriteLine("\nTest 5: Indicate last occurence of 'the':");
-            ml.PrintsEndicated(ind);
+            ml.PrintsIndicated(ind_Indicate);
 
-            cur = ml.head;
+            cur = ml.tail;
             while (cur != null)
             {
                 if (cur.Value == "the")
@@ -77,10 +77,50 @@ namespace дз_по_тетсированию_Двусвязных_списков
 
                     if (after_cur is null)
                         ml.tail = lazy_;
+                    break;
                 }
+                cur = cur.Previous;
             }
             Console.WriteLine("\nTest 6: Add 'lazy' and 'old' after 'the':");
-            ml.Prints();
+            ml.PrintsIndicated(ind_Indicate);
+
+            ind_Indicate = 0;
+            cur = ml.head;
+            while (cur != null)
+            {
+                if (cur.Value == "fox")
+                    break;
+                cur = cur.Previous;
+                ind_Indicate += 1;
+            }
+            Console.WriteLine("\nTest 7: Indicate the 'fox' node:");
+            ml.PrintsIndicated(ind_Indicate);
+
+            cur = ml.head;
+            while (cur != null)
+            {
+                if (cur.Value == "fox")
+                {
+                    List_item quick_ = new List_item("quick");
+                    List_item brown_ = new List_item("brown");
+                    List_item before_cur = cur.Previous;
+
+                    cur.Previous = brown_;
+                    brown_.Previous = quick_;
+                    quick_.Previous = before_cur;
+
+                    brown_.Next = cur;
+                    quick_.Next = brown_;
+                    if (before_cur is null)
+                        ml.head = quick_;
+                    else
+                        before_cur.Next = quick_;
+                }
+                cur = cur.Next;
+            }
+            Console.WriteLine("\nTest 8: Add 'quick' and 'brown' before 'fox':");
+            ind_Indicate += 2;
+            ml.PrintsIndicated(ind_Indicate);
 
             spwch.Stop();
             return ans;
