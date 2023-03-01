@@ -172,6 +172,37 @@ namespace дз_по_тетсированию_Двусвязных_списков
             ml.Prints();
             Console.WriteLine("Node 'dog' is not in the list.");
 
+
+            cur = ml.head;
+            while (cur.Next != null)
+            {
+                if (cur.Value == "brown")
+                {
+                    List_item dog_ = new List_item("dog");
+                    dog_.Previous = cur;
+                    dog_.Next = cur.Next;
+
+                    cur.Next = dog_;
+                    dog_.Next.Previous = dog_;
+                }
+                cur = cur.Next;
+            }
+            ind_Indicate = 0;
+            cur = ml.head;
+            while (cur != null)
+            {
+                if (cur.Value == "dog")
+                    break;
+                cur = cur.Next;
+                ind_Indicate += 1;
+            }
+            Console.WriteLine("\nTest 13: Add node removed in test 11 after a referenced node (brown):");
+            ml.PrintsIndicated(ind_Indicate);
+
+            Console.WriteLine("\nTest 14: Remove node that has the value 'old':");
+            ml.DeleteByValue("old");
+            ml.Prints();
+
             spwch.Stop();
             return ans;
         }
