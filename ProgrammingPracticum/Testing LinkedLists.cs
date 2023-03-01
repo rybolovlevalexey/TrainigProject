@@ -203,6 +203,20 @@ namespace дз_по_тетсированию_Двусвязных_списков
             ml.DeleteByValue("old");
             ml.Prints();
 
+            ml.tail = ml.tail.Previous;
+            ml.tail.Next = null;
+            ml.Append("rhinoceros");
+            Console.WriteLine("\nTest 15: Remove last node, cast to ICollection, and add 'rhinoceros':");
+            ml.Prints();
+
+            Console.WriteLine("\nTest 16: Copy the list to an array:");
+            string[] ml_array = new string[ml.Length()];
+            ml.Copy(ml_array);
+            foreach (string s in ml_array)
+            {
+                Console.WriteLine(s);
+            }
+
             spwch.Stop();
             return ans;
         }
