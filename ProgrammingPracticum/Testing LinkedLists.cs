@@ -9,6 +9,7 @@ namespace дз_по_тетсированию_Двусвязных_списков
         static void Main(string[] args)
         {
             string res = Test1();
+            Console.WriteLine("Затраченное время на выполнение тестирования MyList: " + res);
         }
 
         static public string Test1() // for class MyList
@@ -217,7 +218,15 @@ namespace дз_по_тетсированию_Двусвязных_списков
                 Console.WriteLine(s);
             }
 
+            ml.head = null;
+            ml.tail = null;
+            Console.WriteLine("\nTest 17: Clear linked list.");
+            
             spwch.Stop();
+            TimeSpan ts = spwch.Elapsed;
+            ans = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+            ts.Hours, ts.Minutes, ts.Seconds,
+            ts.Milliseconds / 10);
             return ans;
         }
     }
