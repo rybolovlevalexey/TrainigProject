@@ -118,9 +118,59 @@ namespace дз_по_тетсированию_Двусвязных_списков
                 }
                 cur = cur.Next;
             }
-            Console.WriteLine("\nTest 8: Add 'quick' and 'brown' before 'fox':");
             ind_Indicate += 2;
+            Console.WriteLine("\nTest 8: Add 'quick' and 'brown' before 'fox':");
             ml.PrintsIndicated(ind_Indicate);
+
+            ind_Indicate = 0;
+            cur = ml.head;
+            while (cur != null)
+            {
+                if (cur.Value == "dog")
+                    break;
+                cur = cur.Next;
+                ind_Indicate += 1;
+            }
+            Console.WriteLine("\nTest 9: Indicate the 'dog' node:");
+            ml.PrintsIndicated(ind_Indicate);
+
+            Console.WriteLine("\nTest 10: Throw exception by adding node (fox) already in the list:");
+            if (ml.CheckIn("fox"))
+                Console.WriteLine("fox in MyList");
+            else
+                Console.WriteLine("fox not in MyList");
+
+            List_item required_node = ml.head;
+            while (required_node != null)
+            {
+                if (required_node.Value == "fox")
+                {
+                    required_node.Previous.Next = required_node.Next;
+                    required_node.Next.Previous = required_node.Previous;
+                    break;
+                }
+                required_node = required_node.Next;
+            }
+            cur = ml.head;
+            while (cur != null)
+            {
+                if (cur.Value == "dog")
+                {
+                    cur.Previous.Next = required_node;
+                    required_node.Previous = cur.Previous;
+                    required_node.Next = cur;
+                    cur.Previous = required_node;
+                    break;
+                }
+                cur = cur.Next;
+            }
+            Console.WriteLine("\nTest 11: Move a referenced node (fox) before the current node (dog):");
+            ml.PrintsIndicated(ind_Indicate);
+
+            ml.DeleteByValue("dog");
+            Console.WriteLine("\nTest 12: Remove current node (dog) and attempt to indicate it:");
+            ml.Prints();
+            Console.WriteLine("Node 'dog' is not in the list.");
 
             spwch.Stop();
             return ans;
