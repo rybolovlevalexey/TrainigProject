@@ -10,7 +10,8 @@ namespace дз_по_тетсированию_Двусвязных_списков
     {
         public List_item<T> head = new List_item<T>(default(T));
         public List_item<T> tail = new List_item<T>(default(T));
-        int Count { get { return Count; } set { Count = value; } }
+        public int Count = -1;
+        //int Count { get { return Count; } set { Count = value; } }
         public MyList() { Count = 0; }
         public MyList(T s) { head.Value = s; tail = head; Count = 1; }
         public MyList(T[] mas_s)
@@ -134,6 +135,7 @@ namespace дз_по_тетсированию_Двусвязных_списков
             head = new List_item<T>(st);
             head.Next = cur;
             cur.Previous = head;
+            Count += 1;
         }
         public bool DeleteByValue(T value)
         {
@@ -206,7 +208,7 @@ namespace дз_по_тетсированию_Двусвязных_списков
             }
             two.Previous = one;
         }
-        public bool Is_Palindrom_new()
+        public bool IsPalindrom()
         {
             List_item<T> to_the_end = head;
             while (to_the_end.Next != null)
@@ -288,6 +290,7 @@ namespace дз_по_тетсированию_Двусвязных_списков
                 temp.Next = elem;
                 tail = elem;
             }
+            Count += 1;
         }
         public void Printn()
         {
@@ -308,6 +311,10 @@ namespace дз_по_тетсированию_Двусвязных_списков
                 temp = temp.Next;
             }
             Console.Write($"{temp.Value}\n");
+        }
+        public int Length()
+        {
+            return Count;
         }
     }
 }
