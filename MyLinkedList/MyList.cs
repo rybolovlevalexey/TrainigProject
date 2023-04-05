@@ -6,7 +6,7 @@ using System.Text;
 namespace дз_по_тетсированию_Двусвязных_списков
 {
     class ValueNotInListError : Exception { }
-    class MyList<T>
+    class MyList<T>: ICloneable
     {
         public List_item<T> head = new List_item<T>(default(T));
         public List_item<T> tail = new List_item<T>(default(T));
@@ -315,6 +315,19 @@ namespace дз_по_тетсированию_Двусвязных_списков
         public int Length()
         {
             return Count;
+        }
+
+        public object Clone()
+        {
+            MyList<T> clone_list = new MyList<T>();
+            List_item<T> cur = this.head;
+            
+            while (cur != null)
+            {
+                clone_list.Append(cur.Value);
+                cur = cur.Next;
+            }
+            return clone_list;
         }
     }
 }
