@@ -6,47 +6,33 @@ using System.Text;
 namespace дз_по_тетсированию_Двусвязных_списков
 {
     class ValueNotInListError : Exception { }
-    class MyList<T>: ICloneable, ICollection<T>
+    class MyList<T>: ICloneable, ICollection<T>, IEnumerable<T>//, IComparable
     {
+        private List_item<T> CurNode;
+        private int CurIndex;
+
         public List_item<T> head = new List_item<T>(default(T));
         public List_item<T> tail = new List_item<T>(default(T));
-        public int Count = -1;
-
-        int ICollection<T>.Count => throw new NotImplementedException();
+        private int count = 0;
         public bool IsReadOnly => throw new NotImplementedException();
+        int ICollection<T>.Count => count;
 
-        //int Count { get { return Count; } set { Count = value; } }
-        public MyList() { Count = 0; }
-        public MyList(T s) { head.Value = s; tail = head; Count = 1; }
+        public MyList() { count = 0; }
+        public MyList(T s) { head.Value = s; tail = head; count = 1; }
         public MyList(T[] mas_s)
         {
-            Count = mas_s.Length;
+            count = mas_s.Length;
             if (mas_s.Length == 0)
                 return;
             if (mas_s.Length == 1)
             {
-                head.Value = mas_s[0]; tail = head;
+                head.Value = mas_s[0];
+                tail = head;
                 return;
             }
-            List_item<T> cur = head;
             head.Value = mas_s[0];
             for (int i = 1; i < mas_s.Length; i += 1)
-            {
-                if (i + 1 != mas_s.Length)
-                {
-                    List_item<T> elem = new List_item<T>(mas_s[i]);
-                    elem.Previous = cur;
-                    cur.Next = elem;
-                    cur = elem;
-                }
-                else
-                {
-                    List_item<T> elem = new List_item<T>(mas_s[i]);
-                    elem.Previous = cur;
-                    cur.Next = elem;
-                    tail = elem;
-                }
-            }
+                this.Append(mas_s[i]);
         }
         public override string ToString()
         {
@@ -64,7 +50,7 @@ namespace дз_по_тетсированию_Двусвязных_списков
         {
             this.head = null;
             this.tail = null;
-            Count = 0;
+            count = 0;
         }
         public T this[int index]
         {
@@ -77,28 +63,17 @@ namespace дз_по_тетсированию_Двусвязных_списков
         {
             MyList<T> ans = new MyList<T>(a.head.Value);
             List_item<T> cur = a.head.Next;
-            List_item<T> previous = ans.head;
-            List_item<T> new_element;
-
-            while (cur.Next != null)
+            while (cur != null)
             {
-                new_element = new List_item<T>(cur.Value);
-                previous.Next = new_element;
-                previous = previous.Next;
+                ans.Append(cur.Value);
                 cur = cur.Next;
             }
-            new_element = new List_item<T>(cur.Value);
-            previous.Next = new_element;
-            previous = previous.Next;
-            cur = b.head;
-            while (cur.Next != null)
+            cur = b.head.Next;
+            while (cur != null)
             {
-                new_element = new List_item<T>(cur.Value);
-                previous.Next = new_element;
-                previous = previous.Next;
+                ans.Append(cur.Value);
                 cur = cur.Next;
             }
-            ans.Append(cur.Value);
             return ans;
         }
         public void Print_withPreviousNext()
@@ -107,31 +82,21 @@ namespace дз_по_тетсированию_Двусвязных_списков
             while (cur.Next != null)
             {
                 if (cur.Previous == null)
-                {
                     Console.Write("NO");
-                }
                 else
-                {
                     Console.Write(cur.Previous.Value);
-                }
                 Console.Write(" ");
                 Console.Write(cur.Value);
                 Console.Write(" ");
                 if (cur.Next == null)
-                {
                     Console.Write("NO");
-                }
                 else
-                {
                     Console.Write(cur.Next.Value);
-                }
                 Console.WriteLine("");
                 cur = cur.Next;
             }
             if (cur.Next == null)
-            {
                 Console.Write(cur.Previous.Value + " " + cur.Value + " NO");
-            }
         }
         public void AddFirst(T st)
         {
@@ -139,16 +104,16 @@ namespace дз_по_тетсированию_Двусвязных_списков
             head = new List_item<T>(st);
             head.Next = cur;
             cur.Previous = head;
-            Count += 1;
+            count += 1;
         }
         public bool DeleteByValue(T value)
         {
-            Count -= 1;
             List_item<T> cur = head;
-            if (Convert.ToString(cur.Value) == Convert.ToString(value))
+            if (cur.Value.Equals(value))
             {
                 head.Value = cur.Next.Value;
                 head.Next = cur.Next.Next;
+                count -= 1;
                 return true;
             }
             while (cur.Next != null)
@@ -159,19 +124,17 @@ namespace дз_по_тетсированию_Двусвязных_списков
                 {
                     previous.Next = cur.Next;
                     cur.Next.Previous = previous;
+                    count -= 1;
                     return true;
                 }
             }
-            Count += 1;
             return false;
         }
-        public void TurningAround()
+        public void Reverse()
         {
-            if (Count == 1 || Count == 0)
-            {
+            if (count == 1 || count == 0)
                 return;
-            }
-            if (Count == 2)
+            if (count == 2)
             {
                 List_item<T> first_ = head;
                 List_item<T> second_ = first_.Next;
@@ -214,87 +177,58 @@ namespace дз_по_тетсированию_Двусвязных_списков
         }
         public bool IsPalindrom()
         {
-            List_item<T> to_the_end = head;
-            while (to_the_end.Next != null)
-            {
-                to_the_end = to_the_end.Next;
-            }
-            int dl = Count, i = 0;
-
+            List_item<T> to_the_end = tail;
+            int dl = count, i = 0;
             List_item<T> from_start = head;
             while (i < dl / 2)
             {
-                if (Convert.ToString(from_start.Value) != Convert.ToString(to_the_end.Value))
-                {
+                if (!from_start.Value.Equals(to_the_end.Value))
                     return false;
-                }
                 i += 1;
                 from_start = from_start.Next;
                 to_the_end = to_the_end.Previous;
             }
             return true;
         }
-
-        // индексация: слева направо от 0, справа налево от -1
+        // индексация: слева направо от 0
         public List_item<T> ReturnElementByIndex(int ind)
         {
             List_item<T> cur = head;
-            if (ind < 0)
+            int i = 0;
+            if (ind < 0 || ind >= count)
+                throw new IndexOutOfRangeException();
+            while (cur != null)
             {
-                int i = 1;
-                ind = Math.Abs(ind);
-                while (cur.Next != null)
-                {
-                    if (i + ind - 1 == Count)
-                    {
-                        return cur;
-                    }
-                    cur = cur.Next;
-                    i += 1;
-                }
-                if (i - 1 + ind == Count)
-                {
+                if (ind == i)
                     return cur;
-                }
+                i += 1;
+                cur = cur.Next;
             }
-            else
-            {
-                int i = 0;
-                while (cur.Next != null)
-                {
-                    if (i == ind)
-                    {
-                        return cur;
-                    }
-                    cur = cur.Next;
-                    i += 1;
-                }
-                if (i == ind)
-                {
-                    return cur;
-                }
-            }
-            throw new IndexOutOfRangeException();
+            return cur;
         }
-        public void Append(T st)
+        private void Append(T st)
         {
-            if (Count == 0)
+            if (count == 0)
             {
                 this.head.Value = st;
+                tail = head;
             }
             else
             {
-                List_item<T> temp = head;
-                while (temp.Next != null)
+                if (count == 1)
                 {
-                    temp = temp.Next;
+                    tail = new List_item<T>(st);
+                    tail.Previous = head;
+                    head.Next = tail;
+                } else
+                {
+                    List_item<T> cur = new List_item<T>(st);
+                    tail.Next = cur;
+                    cur.Previous = tail;
+                    tail = cur;
                 }
-                List_item<T> elem = new List_item<T>(st);
-                elem.Previous = temp;
-                temp.Next = elem;
-                tail = elem;
             }
-            Count += 1;
+            count += 1;
         }
         public void Printn()
         {
@@ -316,11 +250,7 @@ namespace дз_по_тетсированию_Двусвязных_списков
             }
             Console.Write($"{temp.Value}\n");
         }
-        public int Length()
-        {
-            return Count;
-        }
-
+ 
         public object Clone()
         {
             MyList<T> clone_list = new MyList<T>();
@@ -333,34 +263,36 @@ namespace дз_по_тетсированию_Двусвязных_списков
             }
             return clone_list;
         }
-
         public void Add(T item)
         {
             this.Append(item);
         }
-
         public bool Contains(T item)
         {
             List_item<T> cur = this.head;
             while(cur != null)
             {
-                if (cur.Value == item)
+                if (cur.Value.Equals(item))
                     return true;
                 cur = cur.Next;
             }
             return false;
         }
-
-        public void CopyTo(T[] array, int arrayIndex)
+        public void CopyTo(T[] array, int arrayIndex=0)
         {
-            throw new NotImplementedException();
+            List_item<T> cur = this.head;
+            int index = 0;
+            while (cur != null)
+            {
+                array[index + arrayIndex] = cur.Value;
+                cur = cur.Next;
+                index += 1;
+            }
         }
-
         public bool Remove(T item)
         {
             return this.DeleteByValue(item);
         }
-
         public IEnumerator<T> GetEnumerator()
         {
             throw new NotImplementedException();
