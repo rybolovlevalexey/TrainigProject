@@ -15,7 +15,7 @@ namespace дз_по_тетсированию_Двусвязных_списков
         public List_item<T> tail = new List_item<T>(default(T));
         private int count = 0;
         public bool IsReadOnly => throw new NotImplementedException();
-        int ICollection<T>.Count => count;
+        int ICollection<T>.Count { get { return count; } }
 
         public MyList() { count = 0; }
         public MyList(T s) { head.Value = s; tail = head; count = 1; }
@@ -36,15 +36,14 @@ namespace дз_по_тетсированию_Двусвязных_списков
         }
         public override string ToString()
         {
-            string result = "";
-            List_item<T> temp = head;
-            while (temp.Next != null)
+            StringBuilder result = new StringBuilder();
+            List_item<T> cur = this.head;
+            while (cur != null)
             {
-                result += $"{temp.Value} ";
-                temp = temp.Next;
+                result.Append(Convert.ToString(cur.Value) + " ");
+                cur = cur.Next;
             }
-            result += $"{temp.Value}\n";
-            return result;
+            return result.ToString();
         }
         public void Clear()
         {
