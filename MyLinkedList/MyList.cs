@@ -6,11 +6,15 @@ using System.Text;
 namespace дз_по_тетсированию_Двусвязных_списков
 {
     class ValueNotInListError : Exception { }
-    class MyList<T>: ICloneable
+    class MyList<T>: ICloneable, ICollection<T>
     {
         public List_item<T> head = new List_item<T>(default(T));
         public List_item<T> tail = new List_item<T>(default(T));
         public int Count = -1;
+
+        int ICollection<T>.Count => throw new NotImplementedException();
+        public bool IsReadOnly => throw new NotImplementedException();
+
         //int Count { get { return Count; } set { Count = value; } }
         public MyList() { Count = 0; }
         public MyList(T s) { head.Value = s; tail = head; Count = 1; }
@@ -328,6 +332,43 @@ namespace дз_по_тетсированию_Двусвязных_списков
                 cur = cur.Next;
             }
             return clone_list;
+        }
+
+        public void Add(T item)
+        {
+            this.Append(item);
+        }
+
+        public bool Contains(T item)
+        {
+            List_item<T> cur = this.head;
+            while(cur != null)
+            {
+                if (cur.Value == item)
+                    return true;
+                cur = cur.Next;
+            }
+            return false;
+        }
+
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(T item)
+        {
+            return this.DeleteByValue(item);
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
         }
     }
 }
