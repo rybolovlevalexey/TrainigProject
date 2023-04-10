@@ -22,7 +22,10 @@ namespace Монополия___имитация_консоли
             if (btn.Text == "Начать игру")
             {
                 btn.Text = "Следующий ход";
-                
+                textBox1.ReadOnly = true;
+                textBox2.ReadOnly = true;
+                textBox1.Text = "2000";
+                textBox2.Text = "2000";
             } else
             {
 
@@ -40,19 +43,19 @@ namespace Монополия___имитация_консоли
         private void label4_Click(object sender, EventArgs e)
         {
 
-        }
+        } 
         private void label3_Click(object sender, EventArgs e)
         {
 
-        }
+        }  
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
 
-        }
+        }  // деньги второго
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
-        }
+        }  // деньги первого
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
