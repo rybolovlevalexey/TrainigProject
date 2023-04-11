@@ -108,6 +108,8 @@ namespace Монополия___имитация_консоли
         public int monopoly_bank = 0;
         public List<string> take_away_money = new List<string>();
         public List<string> pay_money = new List<string>();
+        private List<string> all_chanses = new List<string>();
+        private List<string> all_peremesh = new List<string>();
 
         public Field()
         {
@@ -118,8 +120,32 @@ namespace Монополия___имитация_консоли
         {
             return cells_info[number];
         }
+        public string take_chanse_card()
+        {
+            Random rnd = new Random();
+            return all_chanses[rnd.Next(0, all_chanses.Count - 1)];
+        }
+        public string take_peremesh_card()
+        {
+            Random rnd = new Random();
+            return all_peremesh[rnd.Next(0, all_peremesh.Count - 1)];
+        }
         public void config()
         {
+            all_peremesh.Add("На 5 клеток вперёд");
+            all_peremesh.Add("На 10 клеток вперёд");
+            all_peremesh.Add("На 15 клеток вперёд");
+            all_peremesh.Add("На 20 клеток вперёд");
+            all_peremesh.Add("На клетку Старт");
+
+            all_chanses.Add("Увеличить капитал на 10%");
+            all_chanses.Add("Увеличить капитал на 30%");
+            all_chanses.Add("Увеличить капитал на 50%");
+            all_chanses.Add("Уменьшить капитал на 10%");
+            all_chanses.Add("Уменьшить капитал на 30%");
+            all_chanses.Add("Уменьшить капитал на 50%");
+            all_chanses.Add("Поздравляем, вы выиграли пари у вашего соперника");
+
             pay_money.Add("налоговая инспекция");
             pay_money.Add("чёрный бизнес");
             pay_money.Add("налоговая полиция");
