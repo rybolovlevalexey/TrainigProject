@@ -53,6 +53,9 @@ namespace Монополия___имитация_консоли
             money -= value;
             all_cells.Add(name);
         }
+        // в методе move: number = -3 (карточка перемещение), -2 (пропускает ход по какой-то причине), -1 (пропуск хода из-за дубля)
+        // остальные числа - обычный ход после броска кубика
+        // стандратный move
         public int[] move()
         {
             if (flag_can_move)
@@ -97,6 +100,33 @@ namespace Монополия___имитация_консоли
             flag_can_move = true;
             return new int[] { -2, 0, 0 };
         }
+        // move после перемещения
+        public int[] move(int number)
+        {
+            int new_lap_flag = 0;
+            position += number;
+            if (position > 39)
+            {
+                position -= 39;
+                money += 100;
+                new_lap_flag = 1;
+            }
+            if (position == 30)
+            {
+                flag_can_move = false;
+            }
+            number = -3;
+            return new int[] { number, position, new_lap_flag };
+        }
+        // на клетку старт - получите деньги за круг
+        public int[] move(bool num)
+        {
+            position = 0;
+            money += 100;
+            int new_lap_flag = 1;
+            int number = -3;
+            return new int[] { number, position, new_lap_flag };
+        }
     }
 
     public class Field
@@ -132,6 +162,7 @@ namespace Монополия___имитация_консоли
         }
         public void config()
         {
+            all_peremesh.Add("На клетку Старт");
             all_peremesh.Add("На 5 клеток вперёд");
             all_peremesh.Add("На 10 клеток вперёд");
             all_peremesh.Add("На 15 клеток вперёд");
