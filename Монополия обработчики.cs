@@ -50,9 +50,13 @@ namespace Монополия___имитация_консоли
                                 richTextBox1.Text;
                         else
                             richTextBox1.Text = $"Первый игрок бросает кубики и у него выпадает {result[0]}\n" + 
-                                "Он начал новый круг поэтому получает дополнительно 100 единиц валюты" +
+                                "Он начал новый круг поэтому получает дополнительно 100 единиц валюты\n" +
                                 richTextBox1.Text;
                         string place = main_field.give_cell_name(result[1]);
+                        if (place.Split().Length > 1)
+                            textBox3.Text = place.Split()[0] + "\n" + place.Split()[1];
+                        else
+                            textBox3.Text = place.Split()[0];
                         if (!main_field.not_for_sale.Contains(place))
                         {
                             if (!main_field.has_bought.Contains(place))
@@ -61,10 +65,23 @@ namespace Монополия___имитация_консоли
                                 bot1.buy_new_cell(place, result[1] * 10);
                             } else
                             {
-                                bot1.give_money();
-                                bot2.plus_money();
+                                if (bot2.all_cells.Contains(place))
+                                {
+                                    richTextBox1.Text = $"Первый игрок пришёл на клетку второго и заплатил штраф\n" +
+                                        richTextBox1.Text;
+                                    bot1.give_money();
+                                    bot2.plus_money();
+                                } else
+                                {
+                                    richTextBox1.Text = $"Первый игрок пришёл на клетку {place}. Это его клетка\n" +
+                                        richTextBox1.Text;
+                                }
+                                
                             }
                             
+                        } else
+                        {
+
                         }
                         break;
                 }
