@@ -25,10 +25,14 @@ namespace Монополия___имитация_консоли
     {
         Random rnd = new Random();
         private int money = 2000;
-        List<string> all_cells = new List<string>();
+        public List<string> all_cells = new List<string>();
         int position = 0;
         public bool flag_can_move = true;
         
+        public string get_money()
+        {
+            return Convert.ToString(money);
+        }
         public bool change_money(int value)
         {
             money += value;
