@@ -29,17 +29,16 @@ namespace Монополия___имитация_консоли
                 textBox2.ReadOnly = true;
                 textBox1.Text = "2000";
                 textBox2.Text = "2000";
-                //Field main_field = new Field();
             } else
             {
                 int[] result = bot1.move();
                 switch(result[0])
                 {
-                    case -1:
+                    case -1:  // пропуск хода из-за трёх дублей подряд
                         richTextBox1.Text = $"У первого игрока три раза выпали одинаковые числа на кубиках\n" +
                             richTextBox1.Text;
                         break;
-                    case -2:
+                    case -2:  // пропускает ход по какой-то причине
                         richTextBox1.Text = $"Первый игрок должен пропустить этот ход\n" +
                             richTextBox1.Text;
                         bot1.flag_can_move = true;
@@ -57,21 +56,24 @@ namespace Монополия___имитация_консоли
                             textBox3.Text = place.Split()[0] + "\n" + place.Split()[1];
                         else
                             textBox3.Text = place.Split()[0];
-                        if (!main_field.not_for_sale.Contains(place))
+                        if (!main_field.not_for_sale.Contains(place))  // клетка которую можно гипотетически купить
                         {
-                            if (!main_field.has_bought.Contains(place))
+                            if (!main_field.has_bought.Contains(place))  // клетка ещё не куплена
                             {
                                 main_field.has_bought.Add(place);
                                 bot1.buy_new_cell(place, result[1] * 10);
-                            } else
+                                listBox1.Items.Add(place);
+                                richTextBox1.Text = $"Первый игрок покупает клетку {place}\n" +
+                                        richTextBox1.Text;
+                            } else  // клетка уже куплена
                             {
-                                if (bot2.all_cells.Contains(place))
+                                if (bot2.all_cells.Contains(place))  //  клетка принадлежит противнику
                                 {
                                     richTextBox1.Text = $"Первый игрок пришёл на клетку второго и заплатил штраф\n" +
                                         richTextBox1.Text;
                                     bot1.give_money();
                                     bot2.plus_money();
-                                } else
+                                } else  // моя клетка - ничего не происходит
                                 {
                                     richTextBox1.Text = $"Первый игрок пришёл на клетку {place}. Это его клетка\n" +
                                         richTextBox1.Text;
@@ -79,10 +81,36 @@ namespace Монополия___имитация_консоли
                                 
                             }
                             
-                        } else
+                        } else  // сервисная клетка (шанс, джекпот и т.д.)
                         {
+                            if (main_field.take_away_money.Contains(place))  // клетка, на которой забирает весь банк
+                            {
+                                richTextBox1.Text = $"Первый игрок пришёл на клетку {place}. Можно забирать деньги!\n" +
+                                        richTextBox1.Text;
+                                bot1.change_money(main_field.monopoly_bank);
+                                main_field.monopoly_bank = 0;
+                            } else
+                            {
+                                if (main_field.pay_money.Contains(place))  // клетка, на которой надо заплатить в банк
+                                {
+                                    richTextBox1.Text = $"Первый игрок пришёл на клетку {place}. Заплатите в кассу!\n" +
+                                        richTextBox1.Text;
+                                    bot1.give_money();
+                                    main_field.monopoly_bank += 50;
+                                } else
+                                {
+                                    if (place == "Старт")  // клетка старт - никаких действий с деньгами не происходит
+                                    {
 
+                                    } else  // шанс, перемещение
+                                    {
+
+                                    }
+                                }
+                            }
+                            
                         }
+                        textBox1.Text = bot1.get_money();
                         break;
                 }
                 
