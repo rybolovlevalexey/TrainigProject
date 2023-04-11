@@ -104,7 +104,52 @@ namespace Монополия___имитация_консоли
 
                                     } else  // шанс, перемещение
                                     {
-
+                                        string card_result;
+                                        if (place == "шанс") // шанс
+                                        {
+                                            card_result = main_field.take_chanse_card();
+                                            if (card_result.Contains("Увеличить"))
+                                            {
+                                                switch (card_result.Split()[3])
+                                                {
+                                                    case "10%":
+                                                        bot1.change_money(Convert.ToInt32(bot1.get_money()) / 10);
+                                                        break;
+                                                    case "30%":
+                                                        bot1.change_money(Convert.ToInt32(bot1.get_money()) / 30);
+                                                        break;
+                                                    case "50%":
+                                                        bot1.change_money(Convert.ToInt32(bot1.get_money()) / 50);
+                                                        break;
+                                                }
+                                            } else
+                                            {
+                                                if (card_result.Contains("Уменьшить"))
+                                                {
+                                                    switch (card_result.Split()[3])
+                                                    {
+                                                        case "10%":
+                                                            bot1.change_money(Convert.ToInt32(bot1.get_money()) / 10 * (-1));
+                                                            break;
+                                                        case "30%":
+                                                            bot1.change_money(Convert.ToInt32(bot1.get_money()) / 30 * (-1));
+                                                            break;
+                                                        case "50%":
+                                                            bot1.change_money(Convert.ToInt32(bot1.get_money()) / 50 * (-1));
+                                                            break;
+                                                    }
+                                                } else  // вы выиграли пари
+                                                {
+                                                    bot1.plus_money();
+                                                    bot2.give_money();
+                                                }
+                                            }
+                                        } else // перемещение
+                                        {
+                                            card_result = main_field.take_peremesh_card();
+                                        }
+                                        richTextBox1.Text = $"Первому игроку выпала карточка - {card_result}\n" +
+                                                    richTextBox1.Text;
                                     }
                                 }
                             }
