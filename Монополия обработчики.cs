@@ -108,6 +108,8 @@ namespace Монополия___имитация_консоли
                                         if (place == "шанс") // шанс
                                         {
                                             card_result = main_field.take_chanse_card();
+                                            richTextBox1.Text = $"Первому игроку выпала карточка - {card_result}\n" +
+                                                    richTextBox1.Text;
                                             if (card_result.Contains("Увеличить"))
                                             {
                                                 switch (card_result.Split()[3])
@@ -147,9 +149,17 @@ namespace Монополия___имитация_консоли
                                         } else // перемещение
                                         {
                                             card_result = main_field.take_peremesh_card();
-                                        }
-                                        richTextBox1.Text = $"Первому игроку выпала карточка - {card_result}\n" +
+                                            richTextBox1.Text = $"Первому игроку выпала карточка - {card_result}\n" +
                                                     richTextBox1.Text;
+                                            if (card_result.Contains("Старт"))
+                                            {
+                                                bot1.move(true);
+                                            } else
+                                            {
+                                                bot1.move(Convert.ToInt32(card_result.Split()[1]));
+                                            }
+                                        }
+                                        
                                     }
                                 }
                             }
