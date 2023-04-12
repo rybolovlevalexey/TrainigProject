@@ -12,6 +12,7 @@ namespace Монополия___имитация_консоли
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
+
         static void Main()
         {
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
@@ -25,10 +26,41 @@ namespace Монополия___имитация_консоли
     {
         Random rnd = new Random();
         private int money = 2000;
-        public List<string> all_cells = new List<string>();
+        public List<string> all_cells = new List<string>();  // все купленные участки пользователя
         int position = 0;
         public bool flag_can_move = true;
+        private Dictionary<string[], string> cells_otrasl = new Dictionary<string[], string>();
+
+        public Player()
+        {
+            config();
+        }
         
+        // проверка на возможность покупки филиалов и предприятий
+        public void buy_filial()
+        {
+
+        }
+        private void config()
+        {
+            string[] otrasl = new string[3];
+            otrasl[0] = "кинотеатр"; otrasl[1] = "караоке"; otrasl[2] = "ночной клуб";
+            cells_otrasl[otrasl] = "Индустрия развлечений";
+            otrasl[0] = "швейная фабрика"; otrasl[1] = "хлебопекарня"; otrasl[2] = "пивоваренный завод";
+            cells_otrasl[otrasl] = "Пищевая промышленность";
+            otrasl[0] = "интернет-провайдер"; otrasl[1] = "пейджинговая компания"; otrasl[2] = "оператор сотовой связи";
+            cells_otrasl[otrasl] = "Связь и коммуникации";
+            otrasl[0] = "обувная фабрика"; otrasl[1] = "мебельное производство"; otrasl[2] = "швейное объединение";
+            cells_otrasl[otrasl] = "Лёгкая промышленность";
+            otrasl[0] = "издательский дом"; otrasl[1] = "радиостанция"; otrasl[2] = "телевизионная компания";
+            cells_otrasl[otrasl] = "Средства массовой информации";
+            otrasl[0] = "железнодорожное предприятие"; otrasl[1] = "морское пароходство"; otrasl[2] = "авиакомпания";
+            cells_otrasl[otrasl] = "Транспортная отрасль";
+            otrasl[0] = "автомобильный завод"; otrasl[1] = "судостроительная верфь"; otrasl[2] = "металлургический комбинат";
+            cells_otrasl[otrasl] = "Тяжёлая промышленность";
+            otrasl[0] = "угольный синдикат"; otrasl[1] = "газодобывающий холдинг"; otrasl[2] = "угольный холдинг";
+            cells_otrasl[otrasl] = "Добывающая промышленность";
+        }
         public string get_money()
         {
             return Convert.ToString(money);
@@ -160,7 +192,7 @@ namespace Монополия___имитация_консоли
             Random rnd = new Random();
             return all_peremesh[rnd.Next(0, all_peremesh.Count - 1)];
         }
-        public void config()
+        private void config()
         {
             all_peremesh.Add("На клетку Старт");
             all_peremesh.Add("На 5 клеток вперёд");
@@ -237,4 +269,5 @@ namespace Монополия___имитация_консоли
             cells_info[39] = "угольный холдинг";
         }
     }
+
 }
