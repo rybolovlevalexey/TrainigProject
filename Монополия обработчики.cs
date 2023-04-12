@@ -60,11 +60,19 @@ namespace Монополия___имитация_консоли
                         {
                             if (!main_field.has_bought.Contains(place))  // клетка ещё не куплена
                             {
-                                main_field.has_bought.Add(place);
-                                bot1.buy_new_cell(place, result[1] * 10);
-                                listBox1.Items.Add(place);
-                                richTextBox1.Text = $"Первый игрок покупает клетку {place}\n" +
-                                        richTextBox1.Text;
+                                if (Convert.ToInt32(bot1.get_money()) < result[1] * 10)
+                                {
+                                    richTextBox1.Text = $"У первого игрока недостаточно денег на покупку клетки {place}\n" +
+                                            richTextBox1.Text;
+                                } else
+                                {
+                                    main_field.has_bought.Add(place);
+                                    bot1.buy_new_cell(place, result[1] * 10);
+                                    listBox1.Items.Add(place);
+                                    richTextBox1.Text = $"Первый игрок покупает клетку {place}\n" +
+                                            richTextBox1.Text;
+                                }
+                                
                             } else  // клетка уже куплена
                             {
                                 if (bot2.all_cells.Contains(place))  //  клетка принадлежит противнику
@@ -99,6 +107,13 @@ namespace Монополия___имитация_консоли
                                     main_field.monopoly_bank += 50;
                                 } else
                                 {
+                                    if (main_field.take_away_money.Contains(place))
+                                    {
+                                        richTextBox1.Text = $"Первый игрок пришёл на клетку {place}. И забирает все деньги из кассы!\n" +
+                                            richTextBox1.Text;
+                                        bot1.change_money(main_field.monopoly_bank);
+                                        main_field.monopoly_bank = 0;
+                                    }
                                     if (place == "Старт")  // клетка старт - никаких действий с деньгами не происходит
                                     {
 
@@ -110,7 +125,7 @@ namespace Монополия___имитация_консоли
                                             card_result = main_field.take_chanse_card();
                                             richTextBox1.Text = $"Первому игроку выпала карточка - {card_result}\n" +
                                                     richTextBox1.Text;
-                                            if (card_result.Contains("Увеличить"))
+                                            if (card_result.Contains("Увеличить"))  // шанс - увеличение капитала
                                             {
                                                 switch (card_result.Split()[3])
                                                 {
@@ -118,15 +133,15 @@ namespace Монополия___имитация_консоли
                                                         bot1.change_money(Convert.ToInt32(bot1.get_money()) / 10);
                                                         break;
                                                     case "30%":
-                                                        bot1.change_money(Convert.ToInt32(bot1.get_money()) / 30);
+                                                        bot1.change_money(Convert.ToInt32(bot1.get_money()) / 10 * 3);
                                                         break;
                                                     case "50%":
-                                                        bot1.change_money(Convert.ToInt32(bot1.get_money()) / 50);
+                                                        bot1.change_money(Convert.ToInt32(bot1.get_money()) / 2);
                                                         break;
                                                 }
                                             } else
                                             {
-                                                if (card_result.Contains("Уменьшить"))
+                                                if (card_result.Contains("Уменьшить"))  // шанс - уменьшение капитала
                                                 {
                                                     switch (card_result.Split()[3])
                                                     {
@@ -134,10 +149,10 @@ namespace Монополия___имитация_консоли
                                                             bot1.change_money(Convert.ToInt32(bot1.get_money()) / 10 * (-1));
                                                             break;
                                                         case "30%":
-                                                            bot1.change_money(Convert.ToInt32(bot1.get_money()) / 30 * (-1));
+                                                            bot1.change_money(Convert.ToInt32(bot1.get_money()) / 10 * 3 * (-1));
                                                             break;
                                                         case "50%":
-                                                            bot1.change_money(Convert.ToInt32(bot1.get_money()) / 50 * (-1));
+                                                            bot1.change_money(Convert.ToInt32(bot1.get_money()) / 2 * (-1));
                                                             break;
                                                     }
                                                 } else  // вы выиграли пари
@@ -156,7 +171,9 @@ namespace Монополия___имитация_консоли
                                                 bot1.move(true);
                                             } else
                                             {
-                                                bot1.move(Convert.ToInt32(card_result.Split()[1]));
+                                                string place1 = main_field.give_cell_name(bot1.move(Convert.ToInt32(card_result.Split()[1]))[1]);
+                                                richTextBox1.Text = $"После карточки перемещения первый игрок попал на клетку {place1}\n" +
+                                                    richTextBox1.Text;
                                             }
                                         }
                                         
@@ -201,7 +218,6 @@ namespace Монополия___имитация_консоли
         {
 
         }
-
         private void label7_Click(object sender, EventArgs e)
         {
 
