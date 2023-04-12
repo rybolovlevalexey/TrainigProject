@@ -27,6 +27,7 @@ namespace Монополия___имитация_консоли
         Random rnd = new Random();
         private int money = 2000;
         public List<string> all_cells = new List<string>();  // все купленные участки пользователя
+        private Dictionary<string, int> all_filials = new Dictionary<string, int>();  // купленные филиалы игрока: название - уровень покупки;
         int position = 0;
         public bool flag_can_move = true;
         private Dictionary<string[], string> cells_otrasl = new Dictionary<string[], string>();
@@ -37,9 +38,26 @@ namespace Монополия___имитация_консоли
         }
         
         // проверка на возможность покупки филиалов и предприятий
-        public void buy_filial()
+        public string buy_filial()
         {
-
+            string result = "none"; Dictionary<string, int> check_dict = new Dictionary<string, int>();
+            foreach (var elem in all_cells)
+            {
+                foreach(var key in cells_otrasl.Keys)
+                {
+                    if (key.Contains(elem))
+                    {
+                        if (check_dict.Keys.Contains(cells_otrasl[key]))
+                            check_dict[cells_otrasl[key]] += 1;
+                        else
+                            check_dict[cells_otrasl[key]] = 1;
+                    }
+                }
+            }
+            if (!check_dict.Values.Contains(3))
+                return result;
+            List<string> check_filials = new List<string>();
+            return result;
         }
         private void config()
         {
