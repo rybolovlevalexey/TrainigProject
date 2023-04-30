@@ -1,22 +1,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace дз_по_тетсированию_Двусвязных_списков
 {
-    class ValueNotInListError : Exception { }
-    class MyList<T>: ICloneable, ICollection<T>, IEnumerable<T>//, IComparable
+    class MyComp<T> : IComparer<T> where T: IComparable
     {
-        private List_item<T> CurNode;
-        private int CurIndex;
-
+        public int Compare(T x, T y)
+        {
+            return x.CompareTo(y);
+        }
+    }
+    class ValueNotInListError : Exception { }
+    class MyList<T>: ICloneable, ICollection<T>, IEnumerable<T>, IComparable where T: IComparable<T>
+    {
         public List_item<T> head = new List_item<T>(default(T));
         public List_item<T> tail = new List_item<T>(default(T));
         private int count = 0;
         public bool IsReadOnly => throw new NotImplementedException();
         int ICollection<T>.Count { get { return count; } }
-
+        public int Count { get { return (this as ICollection<T>).Count; } }
         public MyList() { count = 0; }
         public MyList(T s) { head.Value = s; tail = head; count = 1; }
         public MyList(T[] mas_s)
@@ -249,7 +254,16 @@ namespace дз_по_тетсированию_Двусвязных_списков
             }
             Console.Write($"{temp.Value}\n");
         }
- 
+        private void Swap(int ind1, int ind2)
+        {
+            List_item<T> elem1 = this.ReturnElementByIndex(ind1);
+            List_item<T> elem2 = this.ReturnElementByIndex(ind2);
+            var a = elem1.Value;
+            var b = elem2.Value;
+            elem1.Value = b;
+            elem2.Value = a;
+        }
+        
         public object Clone()
         {
             MyList<T> clone_list = new MyList<T>();
@@ -294,12 +308,31 @@ namespace дз_по_тетсированию_Двусвязных_списков
         }
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return new MyEnumerator<T>(head);
         }
-
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return this.GetEnumerator();
+        }
+        public int CompareTo(object obj)
+        {
+            MyList<T> other_obj = obj as MyList<T>;
+            return this.Count.CompareTo(other_obj.Count);
+        }
+        public void Sort(IComparer<T> comp)
+        {
+            for (int i = 0; i < this.Count; i += 1)
+            {
+                for (int j = 0; j < this.Count; j += 1)
+                {
+                    if (i == j)
+                        continue;
+                    if (comp.Compare(this.ReturnElementByIndex(i).Value, this.ReturnElementByIndex(j).Value) == -1)
+                    {
+                        this.Swap(i, j);
+                    }
+                }
+            }
         }
     }
 }
